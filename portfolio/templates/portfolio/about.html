@@ -1,0 +1,10 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+    {% for position in positions %}
+        <h1>{{position.title}}</h1>
+        <h1>By: {{position.author}} on: {{position.date_posted}}</h1>
+        <h1>{{position.author}}</h1>
+        <h1>{{position.content}}</h1>
+    {% endfor %}
+{% endblock content %}
