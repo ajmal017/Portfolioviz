@@ -1,0 +1,18 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+{% if messages %}
+
+{% else %}
+<img src="https://eodhistoricaldata.com/{{response.General.LogoURL}}">
+
+    {% for key, value in response.General.items %}
+        <p>{{ key }}: {{ value }}</p>
+    {% endfor %}
+
+    RESEARCH HOME
+
+{% endif %}    
+
+
+{% endblock content %}

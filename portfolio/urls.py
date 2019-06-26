@@ -10,7 +10,8 @@ from .views import (
 from . import views
 
 urlpatterns = [
-    path('', PortfolioListView.as_view(), name='portfolio-home'),
+    path('home/', PortfolioListView.as_view(), name='portfolio-home'),
+    path('', views.dashboard, name='portfolio-dashboard'),
     path('user/<str:username>', UserPortfolioListView.as_view(), name='user-portfolios'),
     path('portfolio/<int:pk>/', PortfolioDetailView.as_view(), name='portfolio-detail'),
     path('portfolio/<int:pk>/update/', PortfolioUpdateView.as_view(), name='portfolio-update'),

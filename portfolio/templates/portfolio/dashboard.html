@@ -1,0 +1,16 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+
+Name: {{ response.General.Name}}
+Symbol : {{ response.General.Code}}
+Type: {{ response.General.Type }}
+
+   
+
+    {% for key, value in response.General.items %}
+        <p>{{ key }}: {{ value }}</p>
+    {% endfor %}
+
+
+{% endblock content %}

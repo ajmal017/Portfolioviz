@@ -4,6 +4,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from users import views as user_views
+from research import views as research_views
 
 
 urlpatterns = [
@@ -21,6 +22,7 @@ urlpatterns = [
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'),
     name='password_reset_complete'),    
     path('', include('portfolio.urls')),
+    path('research/', include('research.urls')),   
 ]
 
 # NOT SUITABLE FOR PRODUCTION

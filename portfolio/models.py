@@ -9,14 +9,11 @@ class Portfolio(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     portfolio_label = models.CharField(max_length=100, blank=True, default='')
 
-
     def __str__(self):
         return self.portfolio_name
 
     def get_absolute_url(self):
         return reverse('portfolio-detail', kwargs={'pk': self.pk})
-
-
 
 class Position(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
