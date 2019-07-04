@@ -16,6 +16,9 @@
     <title>Portfolio</title>
 {% endif %}
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+
   <!-- Custom fonts for this template-->
   <link href="{% static 'portfolio/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
@@ -33,15 +36,14 @@
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="{%url 'portfolio-home' %}">Start Bootstrap</a>
+    <a class="navbar-brand mr-1" href="{%url 'portfolio-home' %}">FOLIO-VIZ</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Navbar Search FORM --------------------------------------------->
-    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" method="POST" action="{%url 'research_home' %}">
-      {% csrf_token %}
+    <!-- Search FORM --------------------------------------------->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" method="GET" action="{%url 'research_home' %}">
       <div class="input-group">
         {{ symbol_form }}
         <div class="input-group-append">
@@ -104,7 +106,7 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="{%url 'portfolio-home' %}">
+        <a class="nav-link" href="{%url 'research_home' %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span>
         </a>
@@ -126,7 +128,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{%url 'charts' %}">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Charts</span></a>
       </li>
@@ -202,20 +204,17 @@
   <script src="{% static 'portfolio/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
   <!-- Page level plugin JavaScript-->
-  <script src="{% static 'portfolio/vendor/chart.js/Chart.min.js' %}"></script>
   <script src="{% static 'portfolio/vendor/datatables/jquery.dataTables.js' %}"></script>
   <script src="{% static 'portfolio/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
 
-  <!-- Custom scripts for all pages-->
+  <!-- Template scripts for all pages-->
   <script src="{% static 'portfolio/js/sb-admin.min.js' %}"></script>
 
-  <!-- Demo scripts for this page-->
-  <script src="{% static 'portfolio/js/demo/datatables-demo.js' %}"></script>
-  <script src="{% static 'portfolio/js/demo/chart-area-demo.js' %}"></script>
+  <!-- Custom scripts -->
 
-  <!-- Demo scripts for this page-->
-  <script src="{% static 'portfolio/js/charts.js' %}"></script>
   <script src="{% static 'portfolio/js/custom.js' %}"></script>
+  <script src="{% static 'portfolio/js/canvasjs.min.js' %}"></script>
+  <script src="{% static 'portfolio/js/charts.js' %}"></script>
 
 
 </body>

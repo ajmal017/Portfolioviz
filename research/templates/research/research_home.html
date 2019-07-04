@@ -4,15 +4,106 @@
 {% if messages %}
 
 {% else %}
-<img src="https://eodhistoricaldata.com/{{response.General.LogoURL}}">
 
-    {% for key, value in response.General.items %}
-        <p>{{ key }}: {{ value }}</p>
-    {% endfor %}
 
-    RESEARCH HOME
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-5">
+                    <h1 class="display-1 symbol-title mb-0 pb-0">{{ response.General.Code }}</h1>
+                    <span>{{ response.General.Name }}</span>
+                </div>
+                <div class="col-7">
+                    <button type="button" data-toggle="modal" data-target="#addPortfolioModal" class="btn btn-primary btn-lg mt-3 float-right">Add to portfolio</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <table class="table-primary table-bordered table-sm">
+                        <tbody>
+                        <tr>
+                            <th>Type:</th>
+                            <td>{{ response.General.Type }}</td>
+                            <th>Exchange:</th>
+                            <td>{{ response.General.Exchange }}</td>
+                        </tr>
+                        <tr>
+                            {% if response.General.Sector %} <th>Sector:</th>
+                            <td>{{ response.General.Sector }}</td> {% endif %}
+                            {% if response.General.Industry %}<th>Industry:</th>
+                            <td>{{ response.General.Industry }}</td>{% endif %}
+                        </tr>
+                        <tr>
+                            {% if response.General.GicSector %}<th>GIC Sector:</th>
+                            <td>{{ response.General.GicSector }}</td>{% endif %}
+                            {% if response.General.GicIndustry %}<th>GIC Industry:</th>
+                            <td>{{ response.General.GicIndustry }}</td>{% endif %}
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xl-6">
+                    <table class="table-primary table-bordered table-sm">
+                        <tbody>
+                        <tr>
+                            <th>Market Cap (M):</th>
+                            <td>${{ response.Highlights.MarketCapitalizationMln }}</td>
+                            <th>Wallstreet Target:</th>
+                            <td>${{ response.Highlights.WallStreetTargetPrice }}</td>
+                        </tr>
+                        <tr>
+                            <th>Dividend / Share:</th>
+                            <td>{{ response.Highlights.DividendShare }}</td>
+                            <th>Dividend Yield:</th>
+                            <td>{{ response.Highlights.DividendYield }}%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p> {{ response.General.Description }}</p>
+    
+<!-- Add To Portfolio Modal-->
+<div class="modal fade" id="addPortfolioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+                
+                <div class="col-7">
+                    <h5 class="modal-title" id="exampleModalLabel">Add <strong>{{ response.General.Name }}</strong> to portfolio:</h5>
+                </div> 
+                <div class="col-5 pl-0">
+                    {{ addPositionForm.portfolio }}
+                </div> 
+            
+            
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="col-6">
+                Transaction: {{ addPositionForm.transaction_type }}
+                # of shares: {{ addPositionForm.shares }}
+                Price: {{ addPositionForm.price }}
+                Commission: {{ addPositionForm.commission }}
+                Date: {{ addPositionForm.date }}
+            </div>       
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="#">Add Position</a>
+        </div>
+        </div>
+    </div>
+</div>
+
+
 
 {% endif %}    
+
 
 
 {% endblock content %}
