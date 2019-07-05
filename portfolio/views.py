@@ -52,7 +52,7 @@ class PortfolioDetailView(DetailView):
     
 class PortfolioCreateView(LoginRequiredMixin, CreateView):
     model = Portfolio
-    fields = ['date_added', 'portfolio_name', 'portfolio_label']
+    fields = ['date_added', 'portfolio_name', 'portfolio_label', 'description']
 
     # setting author of the portfolio to logged in user
     def form_valid(self, form):

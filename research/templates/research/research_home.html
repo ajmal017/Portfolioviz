@@ -9,61 +9,123 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <div class="row">
-                <div class="col-5">
-                    <h1 class="display-1 symbol-title mb-0 pb-0">{{ response.General.Code }}</h1>
-                    <span>{{ response.General.Name }}</span>
+                <div class="col-9 pt-3">
+                    <h1 class="display-5 symbol-title d-inline">{{ fundamentals.General.Name }}</h1>
+                    <span class="d-inline">({{ fundamentals.General.Code }})</span>
                 </div>
-                <div class="col-7">
+                <div class="col-3">
                     <button type="button" data-toggle="modal" data-target="#addPortfolioModal" class="btn btn-primary btn-lg mt-3 float-right">Add to portfolio</button>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-6">
-                    <table class="table-primary table-bordered table-sm">
+                <div class="col-7">
+                    <h1 class="d-inline" id="currPrice">${{realTime.close}}</h1>
+                    {% if realTime.changeDown %}
+                        <span id="currPriceChangeDown">{{realTime.change}} ({{realTime.change_p}}%)</span>
+                    {% else %}
+                        <span id="currPriceChange">{{realTime.change}} ({{realTime.change_p}}%)</span>
+                    {% endif %}
+                    <table class="table table-sm priceSummaryInfo table-info">
                         <tbody>
-                        <tr>
-                            <th>Type:</th>
-                            <td>{{ response.General.Type }}</td>
-                            <th>Exchange:</th>
-                            <td>{{ response.General.Exchange }}</td>
-                        </tr>
-                        <tr>
-                            {% if response.General.Sector %} <th>Sector:</th>
-                            <td>{{ response.General.Sector }}</td> {% endif %}
-                            {% if response.General.Industry %}<th>Industry:</th>
-                            <td>{{ response.General.Industry }}</td>{% endif %}
-                        </tr>
-                        <tr>
-                            {% if response.General.GicSector %}<th>GIC Sector:</th>
-                            <td>{{ response.General.GicSector }}</td>{% endif %}
-                            {% if response.General.GicIndustry %}<th>GIC Industry:</th>
-                            <td>{{ response.General.GicIndustry }}</td>{% endif %}
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-xl-6">
-                    <table class="table-primary table-bordered table-sm">
-                        <tbody>
-                        <tr>
-                            <th>Market Cap (M):</th>
-                            <td>${{ response.Highlights.MarketCapitalizationMln }}</td>
-                            <th>Wallstreet Target:</th>
-                            <td>${{ response.Highlights.WallStreetTargetPrice }}</td>
-                        </tr>
-                        <tr>
-                            <th>Dividend / Share:</th>
-                            <td>{{ response.Highlights.DividendShare }}</td>
-                            <th>Dividend Yield:</th>
-                            <td>{{ response.Highlights.DividendYield }}%</td>
-                        </tr>
+                            <tr>
+                                <td>Open:</td>
+                                <th>{{realTime.open}}</th>
+                                <td>High:</td>
+                                <th>{{realTime.high}}</th>
+                                <td>Low:</td>
+                                <th>{{realTime.low}}</th>
+                                <td>Previous Close</td>
+                                <th>{{realTime.close}}</th>
+                                <td>Volume</td>
+                                <th>{{realTime.volume}}</th>
+                            </tr>
+                            <tr>
+                                {% if fundamentals.Highlights.WallStreetTargetPrice %}
+                                    <td>Wallstreet Target:</td>
+                                    <th>${{ fundamentals.Highlights.WallStreetTargetPrice }}</th>
+                                {% endif %}
+                                {% if fundamentals.Technicals.52WeekHigh %}
+                                    <td>52 Week High</td>
+                                    <th>${{ fundamentals.Technicals.52WeekHigh }}</th>
+                                {% endif %}
+                                {% if fundamentals.Technicals.52WeekLow %}
+                                    <td>52 Week Low:</td>
+                                    <th>${{ fundamentals.Technicals.52WeekLow }}</th>
+                                {% endif %}
+                                {% if fundamentals.Technicals.Beta %}
+                                    <td>Beta:</td>
+                                    <th>{{ fundamentals.Technicals.Beta }}</th>
+                                {% endif %}
+                                {% if fundamentals.Highlights.MarketCapitalizationMln %}
+                                    <td>Market Cap (M):</td>
+                                    <th>${{ fundamentals.Highlights.MarketCapitalizationMln }}</th>
+                                {% endif %}
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-7" id="quoteDate">
+                    <span >Quote as of: {{realTime.timestamp}}</span>
+                </div>
+            </div>
+            <div class="row pt-3">
+                <div class="col-3 priceSummaryInfo">
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <td>Type</td>
+                                    <th>{{ fundamentals.General.Type }}</th>
+                                </tr>
+                                {% if fundamentals.General.Industry %}
+                                <tr>
+                                    <td>Industry:</td>
+                                    <th>{{ fundamentals.General.Industry }}</th>
+                                </tr>
+                                {% endif %}
+                                {% if fundamentals.General.GicIndustry %}
+                                <tr>
+                                    <td>GIC Industry</td>
+                                    <th>{{ fundamentals.General.GicIndustry }}</th>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                </div>    
+                <div class="col-3 priceSummaryInfo">
+                    <table class="table table-sm">
+                        <tbody>
+                            <tr>
+                                <td>Exchange</td>
+                                <th>{{ fundamentals.General.Exchange }}</th>
+                            </tr>
+                            {% if fundamentals.General.Sector %}
+                            <tr>
+                                <td>Sector:</td>
+                                <th>{{ fundamentals.General.Sector }}</th>
+                            </tr>
+                            {% endif %}
+                            {% if fundamentals.General.GicSector %}
+                            <tr>
+                                <td>GIC Sector</td>
+                                <th>{{ fundamentals.General.GicSector }}</th>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>    
+            </div>    
+        </div> <!-- CONTAINER -->
+
+
+
+
+          
+          
         </div>
     </div>
-    <p> {{ response.General.Description }}</p>
+    <p> {{ fundamentals.General.Description }}</p>
     
 <!-- Add To Portfolio Modal-->
 <div class="modal fade" id="addPortfolioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -72,16 +134,14 @@
         <div class="modal-header">
                 
                 <div class="col-7">
-                    <h5 class="modal-title" id="exampleModalLabel">Add <strong>{{ response.General.Name }}</strong> to portfolio:</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add <strong>{{ fundamentals.General.Name }}</strong> to portfolio:</h5>
                 </div> 
                 <div class="col-5 pl-0">
                     {{ addPositionForm.portfolio }}
                 </div> 
             
             
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-            </button>
+            
         </div>
         <div class="modal-body">
             <div class="col-6">

@@ -1,8 +1,49 @@
+
+
+
 .jumbotron {
     padding-top:0px;
 
   }
   
 .symbol-title{
-    font-family: 'Rubik Mono One', sans-serif;
+    font-family: 'Impact', sans-serif;
+    font-size:44px;
+}
+
+.priceSummaryInfo{
+  font-size:12px;
+  top: -1rem;
+}
+
+
+#currPrice{
+  font-family: 'Impact', sans-serif;
+  font-size:24px;
+}
+
+#currPriceChange{
+  font-family: 'Impact', sans-serif;
+  font-size:18px;
+  color:#00D23E;
+}
+
+#currPriceChangeDown{
+  font-family: 'Impact', sans-serif;
+  font-size:18px;
+  color:#FF3E22;
+}
+
+.table th {
+  text-align: left;   
+}
+
+table{
+  font-size:14px;
+}
+
+#quoteDate{
+  font-size:10px;
+  text-align: right;   
+  top: -1rem;
 }
