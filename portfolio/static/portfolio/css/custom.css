@@ -55,7 +55,11 @@ table{
 
 }
 
-.statementSelected{
-  border: 5px solid red;
+.tableDates{
+  font-weight:bold;
+  font-size:16px;
 }
 
+.tableDesign{
+  border:2px solid black;
+}

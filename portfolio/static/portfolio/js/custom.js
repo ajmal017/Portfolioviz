@@ -1,8 +1,19 @@
 $(document).ready(function() { 
     $('#descriptionCard').hide()
+    $('#blanceSheetYearlyTableWrapper').hide()
 
-
-
+    
+   
+    // $('#').DataTable();
+    $('#incomeStatementYearlyTable').DataTable({
+        "paging": false,
+        "scrollX": true,
+        "searching": false,
+        "ordering": false,
+        "bInfo": false,
+        "bAutoWidth": true
+        
+      });
 
 
     // CARDS ---------------------------------------------------------------------------

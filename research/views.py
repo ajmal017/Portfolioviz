@@ -66,9 +66,29 @@ def research_home(request):
         fundamentals =  get_fundamentals(symbol, api_key)
         realTime =  get_realTime(symbol, api_key)
 
-        balanceSheetData = []
+        balanceSheetYearly = []
+        incomeStatementYearly = []
         
         
+        for value in fundamentals['Financials']['Income_Statement']['yearly'].items():
+            for k, v in value[1].items():
+                if v is None:
+                    value[1][k] = '-'
+            
+                try:
+                    v = float(v)
+                    value[1][k] = int(v / 1000000)
+                except:
+                    continue                
+            incomeStatementYearly.append(value)    
+
+
+
+
+
+
+
+
         for value in fundamentals['Financials']['Balance_Sheet']['yearly'].items():
             for k, v in value[1].items():
                 if v is None:
@@ -79,12 +99,11 @@ def research_home(request):
                     value[1][k] = int(v / 1000000)
                 except:
                     continue                
-            balanceSheetData.append(value)    
+            balanceSheetYearly.append(value)    
             
                       
                 
-        # print(balanceSheetData)
-                
+
         
                 
                 
@@ -101,22 +120,7 @@ def research_home(request):
          
 
             
-                
-                # if value is None:
-                #     value = '-'
-                # print(key)
-                # balanceSheetData[key] = 'test'
-                # print(balanceSheetData[key])
-                # try:
-                #     # print(type(value['totalLiab']))
-                #     totalCurrentLiabilities = float(value['totalCurrentLiabilities'])
-                #     accountsPayable = float(value['accountsPayable'])
-                #     otherCurrentLiab = float(value['otherCurrentLiab'])
-                #     shortLongTermDebt = float(value['shortLongTermDebt'])
-                #     additionalLiabilities = totalCurrentLiabilities - (accountsPayable + otherCurrentLiab +shortLongTermDebt)
-                # except:
-                #     continue
-                # value['otherCurrentLiab'] = str(float(value['otherCurrentLiab']) + additionalLiabilities)
+              
 
 
             
@@ -134,7 +138,8 @@ def research_home(request):
                 'fundamentals': fundamentals,
                 'addPositionForm': addPositionForm,
                 'realTime': realTime,
-                'balanceSheetData': balanceSheetData
+                'balanceSheetYearly': balanceSheetYearly,
+                'incomeStatementYearly': incomeStatementYearly
             }
             return render(request, 'research/research_home.html', context)   
         else:

@@ -226,14 +226,14 @@
             <br>
 
             <!-- BALANCE SHEET YEARLY ------------------------------------------------------>   
-            <div id="blanceSheetYearlyTable">
+            <div id="blanceSheetYearlyTableWrapper">
                 <div class="row">
                     <div class="col-12">
-                        <table class="table table-hover table-sm">
+                        <table class="table table-hover table-sm" id="balanceSheetYearlyTable">
                             <tbody>
                                 <tr>
                                     <th></th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <th>{{x.date}}</th>
                                         {% endfor %}
@@ -241,7 +241,7 @@
                                 </tr>        
                                 <tr>
                                     <th>ASSETS:</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td></td>
                                         {% endfor %}
@@ -249,7 +249,7 @@
                                 </tr>
                                 <tr>
                                     <th>Current Assets:</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td></td>
                                         {% endfor %}
@@ -257,7 +257,7 @@
                                 </tr>
                                 <tr>
                                     <td>Cash and Cash equivalents</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.cash}}</td>
                                         {% endfor %}
@@ -265,7 +265,7 @@
                                 </tr>
                                 <tr>
                                     <td>Net Receivables</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.netReceivables}}</td>
                                         {% endfor %}
@@ -273,7 +273,7 @@
                                 </tr>
                                 <tr>
                                     <td>Inventory</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.inventory}}</td>
                                         {% endfor %}
@@ -281,7 +281,7 @@
                                 </tr>
                                 <tr>
                                     <td>Short Term Investments</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.shortTermInvestments}}</td>
                                         {% endfor %}
@@ -289,7 +289,7 @@
                                 </tr>
                                 <tr>
                                     <td>Other Current Assets</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.otherCurrentAssets}}</td>
                                         {% endfor %}
@@ -297,7 +297,7 @@
                                 </tr>
                                 <tr>
                                     <th>Total Current Assets</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <th>{{x.totalCurrentAssets}}</th>
                                         {% endfor %}
@@ -305,7 +305,7 @@
                                 </tr>
                                 <tr>
                                     <th>Non Current Assets:</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td></td>
                                         {% endfor %}
@@ -313,7 +313,7 @@
                                 </tr>
                                 <tr>
                                     <td>Long Term Investments</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.longTermInvestments}}</td>
                                         {% endfor %}
@@ -321,7 +321,7 @@
                                 </tr>
                                 <tr>
                                     <td>Property, Plant and Equipment</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.propertyPlantEquipment}}</td>
                                         {% endfor %}
@@ -329,7 +329,7 @@
                                 </tr>
                                 <tr>
                                     <td>Intagible Assets</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.intangibleAssets}}</td>
                                         {% endfor %}
@@ -337,7 +337,7 @@
                                 </tr>
                                 <tr>
                                     <td>Good Will</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.goodWill}}</td>
                                         {% endfor %}
@@ -345,7 +345,7 @@
                                 </tr>
                                 <tr>
                                     <td>Other Assets</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.otherAssets}}</td>
                                         {% endfor %}
@@ -353,7 +353,7 @@
                                 </tr>
                                 <tr>
                                     <th>Total Assets:</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <th>{{x.totalAssets}}</th>
                                         {% endfor %}
@@ -361,7 +361,7 @@
                                 </tr>
                                 <tr>
                                     <th>LIABILITIES:</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td></td>
                                         {% endfor %}
@@ -369,7 +369,7 @@
                                 </tr>
                                 <tr>
                                     <th>Current Liabilities:</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td></td>
                                         {% endfor %}
@@ -377,7 +377,7 @@
                                 </tr>
                                 <tr>
                                     <td>Accounts Payable</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.accountsPayable}}</td>
                                         {% endfor %}
@@ -385,7 +385,7 @@
                                 </tr>
                                 <tr>
                                     <td>Term Debt</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.shortLongTermDebt}}</td>
                                         {% endfor %}
@@ -393,7 +393,7 @@
                                 </tr>
                                 <tr>
                                     <td>Other Current Liabilities</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.otherCurrentLiab}}</td>
                                         {% endfor %}
@@ -401,7 +401,7 @@
                                 </tr>
                                 <tr>
                                     <th>Total Current Liabilities:</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <th>{{x.totalCurrentLiabilities}}</th>
                                         {% endfor %}
@@ -409,7 +409,7 @@
                                 </tr>
                                 <tr>
                                     <th>Non current Liabilities:</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td></td>
                                         {% endfor %}
@@ -417,7 +417,7 @@
                                 </tr>
                                 <tr>
                                     <td>Deferred Long Term Liabilities</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.deferredLongTermLiab}}</td>
                                         {% endfor %}
@@ -425,7 +425,7 @@
                                 </tr>
                                 <tr>
                                     <td>Long term debt</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.longTermDebt}}</td>
                                         {% endfor %}
@@ -433,7 +433,7 @@
                                 </tr>
                                 <tr>
                                     <td>Other non-current Liabilities</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.otherLiab}}</td>
                                         {% endfor %}
@@ -441,7 +441,7 @@
                                 </tr>
                                 <tr>
                                     <th>Total Liabilities:</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <th>{{x.totalLiab}}</th>
                                         {% endfor %}
@@ -449,7 +449,7 @@
                                 </tr>
                                 <tr>
                                     <th>SHAREHOLDER'S EQUITY:</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td></td>
                                         {% endfor %}
@@ -457,7 +457,7 @@
                                 </tr>
                                 <tr>
                                     <td>Preferred Stock Equity</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.preferredStockTotalEquity}}</td>
                                         {% endfor %}
@@ -465,7 +465,7 @@
                                 </tr>
                                 <tr>
                                     <td>Common Stock</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.commonStock}}</td>
                                         {% endfor %}
@@ -473,7 +473,7 @@
                                 </tr>
                                 <tr>
                                     <td>Additional Paid In Capital</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.additionalPaidInCapital}}</td>
                                         {% endfor %}
@@ -481,7 +481,7 @@
                                 </tr>
                                 <tr>
                                     <td>Retained Earnings</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.retainedEarnings}}</td>
                                         {% endfor %}
@@ -489,7 +489,7 @@
                                 </tr>
                                 <tr>
                                     <td>Treasury Stock</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.treasuryStock}}</td>
                                         {% endfor %}
@@ -497,7 +497,7 @@
                                 </tr>
                                 <tr>
                                     <td>Accumulated Other Comprehensive Income</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.accumulatedOtherComprehensiveIncome}}</td>
                                         {% endfor %}
@@ -505,7 +505,7 @@
                                 </tr>
                                 <tr>
                                     <td>Total Permanent Equity</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.totalPermanentEquity}}</td>
                                         {% endfor %}
@@ -513,7 +513,7 @@
                                 </tr>
                                 <tr>
                                     <td>Other Stockholder Equity</td>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <td>{{x.otherStockholderEquity}}</td>
                                         {% endfor %}
@@ -521,7 +521,7 @@
                                 </tr>
                                 <tr>
                                     <th>Total Shareholder's Equity:</th>
-                                    {% for value in balanceSheetData %}
+                                    {% for value in balanceSheetYearly %}
                                         {% for x in value %}
                                         <th>{{x.totalStockholderEquity}}</th>
                                         {% endfor %}
@@ -532,12 +532,178 @@
                     </div> <!-- COL -->
                 </div> <!-- ROW -->
             </div>
+
+            <!-- INCOME STATEMENT YEARLY ------------------------------------------------------>   
+            <div id="incomeStatementYearlyWrapper">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-hover table-striped table-sm tableDesign" cellspacing="20" width="100%" id="incomeStatementYearlyTable">
+                            <thead>
+                                <tr class="d-flex">
+                                    <td class="col-1"></td>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col tableDates" width="100px">   
+                                    {% for x in value %}
+                                        {{x.date}}
+                                    {% endfor %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="d-flex">
+                                    <th class="col-1">Total Net Sales</th>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col">   
+                                    {% for x in value %}
+                                        {{x.totalRevenue}}
+                                    {% endfor %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <td class="col-1">Cost of Sales</td>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col">
+                                        {% for x in value %}
+                                            {{x.costOfRevenue}}
+                                        {% endfor %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <td class="col-1">Gross Profit</td>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col">
+                                        {% for x in value %}
+                                            {{x.grossProfit}}
+                                        {% endfor %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <th class="col-1">Operating Expenses</th>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col">
+                                        {% for x in value %}
+                                        {% endfor %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <td class="col-1">Research and Development</td>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col">   
+                                        {% for x in value %}
+                                            {{x.researchDevelopment}}
+                                        {% endfor %}
+                                    </td> 
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <td class="col-1">General and Administrative</td>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col">
+                                        {% for x in value %}
+                                            {{x.sellingGeneralAdministrative}}
+                                        {% endfor %}
+                                    </td>    
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <td class="col-1">Other Operating Expenses</td>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col" >
+                                        {% for x in value %}
+                                            {{x.otherOperatingExpenses}}
+                                        {% endfor %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <th class="col-1">Total Operating Expenses</th>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col font-weight-bold">
+                                        {% for x in value %}
+                                            {{x.totalOperatingExpenses}}
+                                        {% endfor %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <td class="col-1">Operating Income</td>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col">
+                                        {% for x in value %}
+                                            {{x.operatingIncome}}
+                                        {% endfor %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <td class="col-1">Interest Expense</td>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col">    
+                                        {% for x in value %}
+                                            {{x.interestExpense}}
+                                        {% endfor %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <th class="col-1">Total non operating income expense, net</th>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col font-weight-bold">  
+                                        {% for x in value %}
+                                            {{x.totalOtherIncomeExpenseNet}}
+                                        {% endfor %}
+                                    </td>  
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <td class="col-1">Income before taxes</td>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col">   
+                                        {% for x in value %}
+                                            {{x.incomeBeforeTax}}
+                                        {% endfor %}
+                                    </td> 
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <td class="col-1">Income tax expense</td>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col">   
+                                        {% for x in value %}
+                                            {{x.incomeTaxExpense}}
+                                        {% endfor %}
+                                    </td> 
+                                    {% endfor %}
+                                </tr>
+                                <tr class="d-flex">
+                                    <th class="col-1">Net Income</th>
+                                    {% for value in incomeStatementYearly %}
+                                    <td class="col font-weight-bold">   
+                                        {% for x in value %}
+                                            {{x.netIncome}}
+                                        {% endfor %}
+                                    </td> 
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> <!-- COL -->
+                </div> <!-- ROW -->
+            </div>
+
+
+
+
         </div> <!-- financials card -->
 
     </div> <!-- card body -->
 
 </div><!-- card -->
-
 
 
 
