@@ -1,19 +1,16 @@
 {% extends "portfolio/base.html" %}
 {% block content %}
-    <h1 class="mb-3">Portfolios by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
+    <h1 class="mb-3">{{ view.kwargs.username }}'s Portfolios ({{ page_obj.paginator.count }})</h1>
     
     {% for portfolio in portfolios %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ portfolio.user.profile.image.url }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{% url 'user-portfolios' portfolio.user.username %}">{{ portfolio.user }}</a>
-              <small class="text-muted">{{ portfolio.date_added|date:"F d, Y" }}</small>
-            </div>
-            <h2><a class="article-title" href="{% url 'portfolio-detail' portfolio.id %}">{{ portfolio.portfolio_name }}</a></h2>
-            <!-- <p class="article-content">{{ portfolio.content }}</p> -->
+        <div class="card">
+          <a class="mr-2" href="{% url 'portfolio-detail' portfolio.id %}"><h5 class="card-header">{{ portfolio.portfolio_name }}</h5></a>
+          <div class="card-body">
+            <h5 class="card-title">{{ portfolio.portfolio_label }}</h5>
+            <p class="card-text">{{ portfolio.description }}</p>
+            <a href="#" class="btn btn-primary">Run ML</a>
           </div>
-        </article>
+        </div><br>
     {% endfor %}
     {% if is_paginated %}
 

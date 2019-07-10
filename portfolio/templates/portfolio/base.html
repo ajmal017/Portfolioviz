@@ -45,6 +45,19 @@
     <!-- Search FORM --------------------------------------------->
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" method="GET" action="{%url 'research_home' %}">
       <div class="input-group">
+
+          <!-- RADIO BUTTON US
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="materialInline1" name="inlineMaterialRadiosExample">
+            <label class="form-check-label" for="materialInline1"><img class="img-circle" alt="us_flag" width="45" height="35" src="/media/us.jpg"></label>
+          </div>
+          
+           RADIO BUTTON CAN 
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="materialInline2" name="inlineMaterialRadiosExample">
+            <label class="form-check-label" for="materialInline2"><img class="img-circle" alt="us_flag" width="45" height="35" src="/media/cad.png"></label>
+          </div> -->
+
         {{ symbol_form }}
         <div class="input-group-append">
           <button class="btn btn-primary" type="submit">
@@ -108,23 +121,23 @@
       <li class="nav-item active">
         <a class="nav-link" href="{%url 'research_home' %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span>
+          <span>Research</span>
         </a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
+          <span>Portfolios</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <h6 class="dropdown-header">Login Screens:</h6>
-          <a class="dropdown-item" href="#">Login</a>
-          <a class="dropdown-item" href="#">Register</a>
+          <a class="dropdown-item" href="{%url 'user-portfolios' user %}">View Portfolios</a>
+          <!-- <a class="dropdown-item" href="#">Register</a>
           <a class="dropdown-item" href="#">Forgot Password</a>
           <div class="dropdown-divider"></div>
           <h6 class="dropdown-header">Other Pages:</h6>
           <a class="dropdown-item" href="#">404 Page</a>
-          <a class="dropdown-item" href="#">Blank Page</a>
+          <a class="dropdown-item" href="#">Blank Page</a> -->
         </div>
       </li>
       <li class="nav-item">
@@ -135,7 +148,7 @@
       <li class="nav-item">
         <a class="nav-link" href="#">
           <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
+          <span>Analytics</span></a>
       </li>
     </ul>
 

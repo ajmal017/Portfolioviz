@@ -1,12 +1,11 @@
-
-
-
-.jumbotron {
+.jumbotron{
     padding-top:0px;
-
+    background-color:#79FEFF;
+    border-radius:5px;
+    border: 1px groove black;
   }
   
-.symbol-title{
+.fontTitle{
     font-family: 'Impact', sans-serif;
     font-size:44px;
 }
@@ -15,7 +14,6 @@
   font-size:12px;
   top: -1rem;
 }
-
 
 #currPrice{
   font-family: 'Impact', sans-serif;
@@ -47,3 +45,17 @@ table{
   text-align: right;   
   top: -1rem;
 }
+
+.positionWrapper{
+  background-color:#65EDFF;
+  border-style: groove;
+  margin: auto;
+  border-radius: 5px;
+  border: 2px solid black;
+
+}
+
+.statementSelected{
+  border: 5px solid red;
+}
+

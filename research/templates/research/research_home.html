@@ -1,169 +1,545 @@
 {% extends "portfolio/base.html" %}
 
 {% block content %}
+
+
+
+
 {% if messages %}
+    
 
 {% else %}
 
-
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col-9 pt-3">
-                    <h1 class="display-5 symbol-title d-inline">{{ fundamentals.General.Name }}</h1>
-                    <span class="d-inline">({{ fundamentals.General.Code }})</span>
-                </div>
-                <div class="col-3">
-                    <button type="button" data-toggle="modal" data-target="#addPortfolioModal" class="btn btn-primary btn-lg mt-3 float-right">Add to portfolio</button>
-                </div>
+<div class="jumbotron jumbotron-fluid pb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-9 pt-3">
+                <h1 class="display-5 fontTitle d-inline">{{ fundamentals.General.Name }}</h1>
+                <span class="d-inline">({{ fundamentals.General.Code }})</span>
             </div>
-            <div class="row">
-                <div class="col-7">
-                    <h1 class="d-inline" id="currPrice">${{realTime.close}}</h1>
-                    {% if realTime.changeDown %}
-                        <span id="currPriceChangeDown">{{realTime.change}} ({{realTime.change_p}}%)</span>
-                    {% else %}
-                        <span id="currPriceChange">{{realTime.change}} ({{realTime.change_p}}%)</span>
-                    {% endif %}
-                    <table class="table table-sm priceSummaryInfo table-info">
-                        <tbody>
-                            <tr>
-                                <td>Open:</td>
-                                <th>{{realTime.open}}</th>
-                                <td>High:</td>
-                                <th>{{realTime.high}}</th>
-                                <td>Low:</td>
-                                <th>{{realTime.low}}</th>
-                                <td>Previous Close</td>
-                                <th>{{realTime.close}}</th>
-                                <td>Volume</td>
-                                <th>{{realTime.volume}}</th>
-                            </tr>
-                            <tr>
-                                {% if fundamentals.Highlights.WallStreetTargetPrice %}
-                                    <td>Wallstreet Target:</td>
-                                    <th>${{ fundamentals.Highlights.WallStreetTargetPrice }}</th>
-                                {% endif %}
-                                {% if fundamentals.Technicals.52WeekHigh %}
-                                    <td>52 Week High</td>
-                                    <th>${{ fundamentals.Technicals.52WeekHigh }}</th>
-                                {% endif %}
-                                {% if fundamentals.Technicals.52WeekLow %}
-                                    <td>52 Week Low:</td>
-                                    <th>${{ fundamentals.Technicals.52WeekLow }}</th>
-                                {% endif %}
-                                {% if fundamentals.Technicals.Beta %}
-                                    <td>Beta:</td>
-                                    <th>{{ fundamentals.Technicals.Beta }}</th>
-                                {% endif %}
-                                {% if fundamentals.Highlights.MarketCapitalizationMln %}
-                                    <td>Market Cap (M):</td>
-                                    <th>${{ fundamentals.Highlights.MarketCapitalizationMln }}</th>
-                                {% endif %}
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="col-3">
+                <button type="button" data-toggle="modal" data-target="#addPortfolioModal" class="btn btn-primary btn-lg mt-3 float-right">Add to portfolio</button>
             </div>
-            <div class="row">
-                <div class="col-7" id="quoteDate">
-                    <span >Quote as of: {{realTime.timestamp}}</span>
-                </div>
+        </div>
+        <!-- PRICE CHANGE -->
+        <div class="row">
+            <div class="col-8">
+                <h1 class="d-inline" id="currPrice">${{realTime.close}}</h1>
+                {% if realTime.changeDown %}
+                    <span id="currPriceChangeDown">{{realTime.change}} ({{realTime.change_p}}%)</span>
+                {% else %}
+                    <span id="currPriceChange">{{realTime.change}} ({{realTime.change_p}}%)</span>
+                {% endif %}
+                <hr>
             </div>
-            <div class="row pt-3">
-                <div class="col-3 priceSummaryInfo">
-                        <table class="table table-sm">
-                            <tbody>
-                                <tr>
-                                    <td>Type</td>
-                                    <th>{{ fundamentals.General.Type }}</th>
-                                </tr>
-                                {% if fundamentals.General.Industry %}
-                                <tr>
-                                    <td>Industry:</td>
-                                    <th>{{ fundamentals.General.Industry }}</th>
-                                </tr>
-                                {% endif %}
-                                {% if fundamentals.General.GicIndustry %}
-                                <tr>
-                                    <td>GIC Industry</td>
-                                    <th>{{ fundamentals.General.GicIndustry }}</th>
-                                </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
-                </div>    
-                <div class="col-3 priceSummaryInfo">
+        </div>
+        <div class="row">
+            <div class="col-4 priceSummaryInfo">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Open:</td>
+                            <th>{{realTime.open}}</th>
+                            <td>Previous Close</td>
+                            <th>{{realTime.close}}</th>
+                        </tr>
+                        <tr>
+                            
+                        {% if fundamentals.Technicals.Beta  %}
+                            <td>Beta</td>
+                            <th>{{ fundamentals.Technicals.Beta }}</th>
+                        {% endif %}
+                            <td>Volume</td>
+                            <th>{{realTime.volume}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 priceSummaryInfo">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Day's Range:</td>
+                            <th>{{realTime.low}}-{{realTime.high}}</th>
+                            {% if fundamentals.Technicals.52WeekHigh and fundamentals.Technicals.52WeekLow  %}
+                                <td>52 week Range:</td>
+                                <th>{{ fundamentals.Technicals.52WeekLow }}-{{ fundamentals.Technicals.52WeekHigh }}</th>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                        {% if fundamentals.Highlights.MarketCapitalizationMln %}
+                            <td>Market Cap (M):</td>
+                            <th>${{ fundamentals.Highlights.MarketCapitalizationMln }}</th>
+                        {% endif %}
+                        {% if fundamentals.Highlights.WallStreetTargetPrice %}
+                            <td>Wallstreet Target:</td>
+                            <th>${{ fundamentals.Highlights.WallStreetTargetPrice }}</th>
+                        {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-4 priceSummaryInfo">
                     <table class="table table-sm">
                         <tbody>
                             <tr>
-                                <td>Exchange</td>
-                                <th>{{ fundamentals.General.Exchange }}</th>
+                                <td>Type</td>
+                                <th>{{ fundamentals.General.Type }}</th>
                             </tr>
-                            {% if fundamentals.General.Sector %}
+                            {% if fundamentals.General.Industry %}
                             <tr>
-                                <td>Sector:</td>
-                                <th>{{ fundamentals.General.Sector }}</th>
+                                <td>Industry:</td>
+                                <th>{{ fundamentals.General.Industry }}</th>
                             </tr>
                             {% endif %}
-                            {% if fundamentals.General.GicSector %}
+                            {% if fundamentals.General.GicIndustry %}
                             <tr>
-                                <td>GIC Sector</td>
-                                <th>{{ fundamentals.General.GicSector }}</th>
+                                <td>GIC Industry</td>
+                                <th>{{ fundamentals.General.GicIndustry }}</th>
                             </tr>
                             {% endif %}
                         </tbody>
                     </table>
-                </div>    
             </div>    
-        </div> <!-- CONTAINER -->
-
-
-
-
-          
-          
+            <div class="col-4 priceSummaryInfo">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Exchange</td>
+                            <th>{{ fundamentals.General.Exchange }}</th>
+                        </tr>
+                        {% if fundamentals.General.Sector %}
+                        <tr>
+                            <td>Sector:</td>
+                            <th>{{ fundamentals.General.Sector }}</th>
+                        </tr>
+                        {% endif %}
+                        {% if fundamentals.General.GicSector %}
+                        <tr>
+                            <td>GIC Sector</td>
+                            <th>{{ fundamentals.General.GicSector }}</th>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>    
         </div>
-    </div>
-    <p> {{ fundamentals.General.Description }}</p>
+        <div class="row">
+            <div class="col-12" id="quoteDate">
+                <span >Quote as of: {{realTime.timestamp}}</span>
+            </div>
+        </div>    
+    </div> <!-- CONTAINER -->
+</div><!-- JUMBOTRON -->
     
-<!-- Add To Portfolio Modal-->
+
+<br>
+    
+<!-- Add To Portfolio Modal ----------------------------------------------------------------------->
 <div class="modal fade" id="addPortfolioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        <div class="modal-header">
-                
+            <div class="modal-header">
                 <div class="col-7">
+                <form method="POST">
+                    {% csrf_token %}
                     <h5 class="modal-title" id="exampleModalLabel">Add <strong>{{ fundamentals.General.Name }}</strong> to portfolio:</h5>
-                </div> 
+                </div>
                 <div class="col-5 pl-0">
                     {{ addPositionForm.portfolio }}
                 </div> 
+            </div>
+
+            <div class="modal-body">
+                <div class="col-6">
+                    Transaction: {{ addPositionForm.transaction_type }}
+                    # of shares: {{ addPositionForm.shares }}
+                    Price: {{ addPositionForm.price }}
+                    Commission: {{ addPositionForm.commission }}
+                    Date: {{ addPositionForm.date }}
+                </div>       
+            </div>
             
-            
-            
-        </div>
-        <div class="modal-body">
-            <div class="col-6">
-                Transaction: {{ addPositionForm.transaction_type }}
-                # of shares: {{ addPositionForm.shares }}
-                Price: {{ addPositionForm.price }}
-                Commission: {{ addPositionForm.commission }}
-                Date: {{ addPositionForm.date }}
-            </div>       
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="#">Add Position</a>
-        </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="submit" href="#">Add Position</a>
+            </div>
+            </form>
         </div>
     </div>
 </div>
 
+<!-- CARDS ---------------------------------------------------------------------------------->
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#description" id="navDescriptionCard">Description</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#financials" id="navFinancialsCard">Financials</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Ratios</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+        </ul>
+    </div>
+
+    <!-- CARD BODY ---------------------------------------------------------------------------------->
+    <div class="card-body">
+        <!-- DESCRIPTION CARD ---------------------------------------------------------------------------------->
+        <div id="descriptionCard">
+            <p> {{ fundamentals.General.Description }}</p>    
+        </div>  
+        
+        <!-- FINANCIALS CARD ---------------------------------------------------------------------------------->
+        <div id="financialsCard">
+            <div class="row">
+                <div class="col-3 text-right">
+                    <button type="button" class="btn btn-info btn-lg">Balance Sheet</button>
+                </div>
+                <div class="col-3 text-right">
+                    <button type="button" class="btn btn-outline-info btn-lg">Income Statement</button>
+                </div>
+                <div class="col-3 text-right">
+                    <button type="button" class="btn btn-outline-info btn-lg">Cash Flow Statement</button>
+                </div>
+                <div class="col-3 pl-5">
+                    <select class="browser-default custom-select custom-select-sm mb-3">
+                        <option class="text-center" selected>(Yearly)</option>
+                        <option value="1">(Quarterly)</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    (In millions, except per share data)  
+                </div>
+            </div>
+            <br>
+
+            <!-- BALANCE SHEET YEARLY ------------------------------------------------------>   
+            <div id="blanceSheetYearlyTable">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-hover table-sm">
+                            <tbody>
+                                <tr>
+                                    <th></th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <th>{{x.date}}</th>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>        
+                                <tr>
+                                    <th>ASSETS:</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td></td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>Current Assets:</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td></td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Cash and Cash equivalents</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.cash}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Net Receivables</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.netReceivables}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Inventory</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.inventory}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Short Term Investments</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.shortTermInvestments}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Other Current Assets</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.otherCurrentAssets}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>Total Current Assets</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <th>{{x.totalCurrentAssets}}</th>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>Non Current Assets:</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td></td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Long Term Investments</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.longTermInvestments}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Property, Plant and Equipment</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.propertyPlantEquipment}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Intagible Assets</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.intangibleAssets}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Good Will</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.goodWill}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Other Assets</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.otherAssets}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>Total Assets:</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <th>{{x.totalAssets}}</th>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>LIABILITIES:</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td></td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>Current Liabilities:</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td></td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Accounts Payable</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.accountsPayable}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Term Debt</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.shortLongTermDebt}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Other Current Liabilities</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.otherCurrentLiab}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>Total Current Liabilities:</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <th>{{x.totalCurrentLiabilities}}</th>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>Non current Liabilities:</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td></td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Deferred Long Term Liabilities</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.deferredLongTermLiab}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Long term debt</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.longTermDebt}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Other non-current Liabilities</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.otherLiab}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>Total Liabilities:</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <th>{{x.totalLiab}}</th>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>SHAREHOLDER'S EQUITY:</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td></td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Preferred Stock Equity</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.preferredStockTotalEquity}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Common Stock</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.commonStock}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Additional Paid In Capital</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.additionalPaidInCapital}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Retained Earnings</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.retainedEarnings}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Treasury Stock</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.treasuryStock}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Accumulated Other Comprehensive Income</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.accumulatedOtherComprehensiveIncome}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Total Permanent Equity</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.totalPermanentEquity}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Other Stockholder Equity</td>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <td>{{x.otherStockholderEquity}}</td>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>Total Shareholder's Equity:</th>
+                                    {% for value in balanceSheetData %}
+                                        {% for x in value %}
+                                        <th>{{x.totalStockholderEquity}}</th>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> <!-- COL -->
+                </div> <!-- ROW -->
+            </div>
+        </div> <!-- financials card -->
+
+    </div> <!-- card body -->
+
+</div><!-- card -->
+
+
 
 
 {% endif %}    
-
-
-
 {% endblock content %}
