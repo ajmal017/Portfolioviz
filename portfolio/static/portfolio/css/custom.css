@@ -58,8 +58,20 @@ table{
 .tableDates{
   font-weight:bold;
   font-size:16px;
+  
 }
 
 .tableDesign{
-  border:2px solid black;
+  border:2px inset black;
+  border-radius:5px;
+  font-family: 'Oswald', sans-serif;
+}
+
+.tableDesignHero{
+  font-family: 'Oswald', sans-serif;
+}
+
+.dataTables_scroll
+{
+    overflow:auto;
 }
