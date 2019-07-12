@@ -83,3 +83,9 @@ tbody th {
 table{
   font-size:12px;
 }
+
+/* GENERAL ---------------------------------------------------------------------------- */ 
+.posFormFields{
+  font-family: 'Impact', sans-serif;
+  font-size: 22px;
+}

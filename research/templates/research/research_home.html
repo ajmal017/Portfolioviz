@@ -2,12 +2,8 @@
 
 {% block content %}
 
-
-
-
 {% if messages %}
     
-
 {% else %}
 
 <div class="jumbotron jumbotron-fluid pb-0">
@@ -136,42 +132,7 @@
         </div>    
     </div> <!-- CONTAINER -->
 </div><!-- JUMBOTRON -->
-    
-    
-<!-- Add To Portfolio Modal ----------------------------------------------------------------------->
-<div class="modal fade" id="addPortfolioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="col-7">
-                <form method="POST">
-                    {% csrf_token %}
-                    <h5 class="modal-title" id="exampleModalLabel">Add <strong>{{ fundamentals.General.Name }}</strong> to portfolio:</h5>
-                </div>
-                <div class="col-5 pl-0">
-                    {{ addPositionForm.portfolio }}
-                </div> 
-            </div>
-
-            <div class="modal-body">
-                <div class="col-6">
-                    Transaction: {{ addPositionForm.transaction_type }}
-                    # of shares: {{ addPositionForm.shares }}
-                    Price: {{ addPositionForm.price }}
-                    Commission: {{ addPositionForm.commission }}
-                    Date: {{ addPositionForm.date }}
-                </div>       
-            </div>
-            
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary" type="submit" href="#">Add Position</a>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-
+   
 <!-- CARDS ---------------------------------------------------------------------------------->
 <div class="card text-center">
     <div class="card-header">
@@ -195,7 +156,7 @@
     <div class="card-body">
         <!-- DESCRIPTION CARD ---------------------------------------------------------------------------------->
         <div id="descriptionCard" style="display: none;">
-            <p> {{ fundamentals.General.Description }}</p>    
+            <p style="text-align: left;"> {{ fundamentals.General.Description }}</p>    
         </div>  
         
         <!-- FINANCIALS CARD ---------------------------------------------------------------------------------->
@@ -1829,6 +1790,52 @@
 </div><!-- card -->
 <br>
 
+<!-- Add To Portfolio Modal ----------------------------------------------------------------------->
+<div class="modal fade" id="addPortfolioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-7">
+                <form method="POST">
+                    {% csrf_token %}
+                    <h6 class="modal-title" id="exampleModalLabel">Add <strong>{{ fundamentals.General.Name }}</strong> to portfolio:</h6>
+                </div>
+                <div class="col-5 pl-0 ml-0">
+                    {{ addPositionForm.portfolio }}
+                </div> 
+            </div>
+
+            <div class="modal-body">
+                <div class="row pb-2">
+                    <div class="col-6 text-right pr-5 posFormFields">Transaction:</div>
+                    <div class="col-4 pl-0">{{ addPositionForm.transaction_type }}</div>
+                </div>
+                <div class="row pb-2">
+                    <div class="col-6 text-right pr-5 posFormFields"># of shares:</div>
+                    <div class="col-4 pl-0">{{ addPositionForm.shares }}</div>
+                </div>
+                <div class="row pb-2">
+                    <div class="col-6 text-right pr-5 posFormFields">Price:</div>
+                    <div class="col-4 pl-0">{{ addPositionForm.price }}</div>
+                </div>
+                <div class="row pb-2">
+                    <div class="col-6 text-right pr-5 posFormFields">Commission:</div>
+                    <div class="col-4 pl-0">{{ addPositionForm.commission }}</div>
+                </div>
+                <div class="row pb-2">
+                    <div class="col-6 text-right pr-5 posFormFields">Date:</div>
+                    <div class="col-4 pl-0">{{ addPositionForm.date }}</div>
+                </div>  
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="submit" href="#">Add Position</a>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 {% endif %}    

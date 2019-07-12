@@ -11,11 +11,18 @@ def cleanFinancialStatement(financialStatement):
                     value[1][k] = '-'
             
                 try:
-                    v = float(v)
-                    value[1][k] = int(v / 1000000)
-                    value[1][k] = f'{value[1][k]:n}'
+                    if len(v) >= 12:
+                        v = float(v)
+                        value[1][k] = int(v / 1000000)
+                        value[1][k] = f'{value[1][k]:n}'
+                    else:
+                        v = float(v)
+                        value[1][k] = round(v / 1000000, 3)
+                        
                 except:
-                    continue         
+                        continue    
+
+                    
                        
             statement.append(value)  
     return statement

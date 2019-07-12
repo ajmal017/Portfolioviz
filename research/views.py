@@ -10,7 +10,6 @@ import pandas as pd
 import json
 
 
-
 # MUST CHANGE IN PRODUCTION
 api_key = '5cf16f2040e332.31358607'
 
@@ -19,12 +18,67 @@ def research_home(request):
     # Create forms
     form = SymbolForm(request.GET or None)
     # addPositionForm = AddPositionForm(**{'user': request.user}, initial={'shares': 100, 'date': '2019-06-04', 'price': 2})
-    data = {
-        'shares': 100,
-        'price': 10,
-        'date': '2019-05-01',
-        'commission': 4.99
-    }
+    
+    if request.method == 'GET':
+        # Validate if SYMBOL form is valid
+        if form.is_valid():
+            symbol = form['symbol'].value()
+            fundamentals =  get_fundamentals(symbol, api_key)
+            realTime =  get_realTime(symbol, api_key)
+
+            data = {
+            'shares': 100,
+            'price': realTime['close'],
+            'date': '2019-05-01',
+            'commission': 4.99,
+            }
+            addPositionForm = AddPositionForm(**{'user': request.user}, initial=data)
+            try:
+                balanceSheetYearly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['yearly'])
+                balanceSheetQuarterly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['quarterly'])
+                incomeStatementYearly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['yearly'])
+                incomeStatementQuarterly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['quarterly'])
+                cashFlowYearly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['yearly'])
+                cashFlowQuarterly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['quarterly'])
+            except:
+                messages.error(request, "Symbol not recognized. Please search again. Type \".TO\" for CAD symbols.", extra_tags='danger')
+                return render(request, 'research/research_home.html')
+
+            if fundamentals and realTime:  
+                realTime['timestamp'] = datetime.fromtimestamp(realTime['timestamp'])
+                realTime['change_p'] = float("{0:.2f}".format(realTime['change_p'] * 100))
+                if realTime['change'] < 0:
+                    realTime['changeDown'] = True
+            
+                context = {
+                    'fundamentals': fundamentals,
+                    'addPositionForm': addPositionForm,
+                    'realTime': realTime,
+                    'balanceSheetYearly': balanceSheetYearly,
+                    'incomeStatementYearly': incomeStatementYearly,
+                    'cashFlowYearly': cashFlowYearly,
+                    'balanceSheetQuarterly': balanceSheetQuarterly,
+                    'incomeStatementQuarterly': incomeStatementQuarterly,
+                    'cashFlowQuarterly': cashFlowQuarterly
+                }
+                return render(request, 'research/research_home.html', context)   
+             
+        # DEFAULT SYMBOL GSPC      
+        fundamentals =  get_fundamentals('gspc.indx', api_key)
+        realTime =  get_realTime('gspc.indx', api_key)
+        if fundamentals and realTime:  
+            realTime['timestamp'] = datetime.fromtimestamp(realTime['timestamp'])
+            realTime['change_p'] = float("{0:.2f}".format(realTime['change_p'] * 100))
+            if realTime['change'] < 0:
+                realTime['changeDown'] = True
+            context = {
+                'fundamentals': fundamentals,
+                'realTime': realTime
+            }
+            return render(request, 'research/research_home.html', context)
+        messages.error(request, "Symbol not recognized. Please search again. Type \".TO\" for CAD symbols.", extra_tags='danger')
+        return render(request, 'research/research_home.html')
+
 
     if request.method == 'POST':
         # print(request.POST)
@@ -34,7 +88,7 @@ def research_home(request):
         formShares = request.POST.get('shares')
         formPrice = request.POST.get('price')
         formTransaction = request.POST.get('transaction_type')
- 
+
         updated_request.update({'symbol': formSymbol})
         addPositionForm = AddPositionForm(updated_request)
         if addPositionForm.is_valid():
@@ -49,74 +103,12 @@ def research_home(request):
             formSymbol = formSymbol.upper()
             
             # username = addPositionForm.cleaned_data.get('username')
-            messages.success(request, f'{formTransaction} {formShares} shares of\
-                                        {formSymbol} at ${formPrice} in portfolio {formPortfolio}.')
+            messages.success(request, f'<strong>{formTransaction} {formShares}</strong> shares of\
+                                        <strong>{formSymbol}</strong> at <strong>${formPrice}</strong> in portfolio <strong>{formPortfolio}.</strong>')
             return redirect('research_home') 
-    else:
-        addPositionForm = AddPositionForm(**{'user': request.user}, initial=data)
+        return redirect('research_home') 
 
 
-
-
-
-    
-    # Validate if SYMBOL form is valid
-    if form.is_valid():
-        symbol = form['symbol'].value()
-        fundamentals =  get_fundamentals(symbol, api_key)
-        realTime =  get_realTime(symbol, api_key)
-
-        balanceSheetYearly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['yearly'])
-        balanceSheetQuarterly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['quarterly'])
-        incomeStatementYearly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['yearly'])
-        incomeStatementQuarterly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['quarterly'])
-        cashFlowYearly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['yearly'])
-        cashFlowQuarterly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['quarterly'])
-        
-
-
-        if fundamentals and realTime:  
-            realTime['timestamp'] = datetime.fromtimestamp(realTime['timestamp'])
-            realTime['change_p'] = float("{0:.2f}".format(realTime['change_p'] * 100))
-            if realTime['change'] < 0:
-                realTime['changeDown'] = True
-         
-            context = {
-                'fundamentals': fundamentals,
-                'addPositionForm': addPositionForm,
-                'realTime': realTime,
-                'balanceSheetYearly': balanceSheetYearly,
-                'incomeStatementYearly': incomeStatementYearly,
-                'cashFlowYearly': cashFlowYearly,
-                'balanceSheetQuarterly': balanceSheetQuarterly,
-                'cashFlowQuarterly': cashFlowQuarterly,
-                'incomeStatementQuarterly': incomeStatementQuarterly
-            }
-            return render(request, 'research/research_home.html', context)   
-        else:
-            messages.error(request, "Symbol not recognized. Please search again. Type \".TO\" for CAD symbols.", extra_tags='danger')
-            return render(request, 'research/research_home.html')
-    
-    # DEFAULT SYMBOL GSPC      
-    fundamentals =  get_fundamentals('gspc.indx', api_key)
-    realTime =  get_realTime('gspc.indx', api_key)
-    if fundamentals and realTime:  
-        realTime['timestamp'] = datetime.fromtimestamp(realTime['timestamp'])
-        realTime['change_p'] = float("{0:.2f}".format(realTime['change_p'] * 100))
-        if realTime['change'] < 0:
-            realTime['changeDown'] = True
-        context = {
-            'fundamentals': fundamentals,
-            'addPositionForm': addPositionForm,
-            'realTime': realTime
-        }
-        return render(request, 'research/research_home.html', context)
-    messages.error(request, "Symbol not recognized. Please search again. Type \".TO\" for CAD symbols.", extra_tags='danger')
-    return render(request, 'research/research_home.html')
-
-
-    
-    
 def charts(request):
     return render(request, 'research/charts.html')    
     
