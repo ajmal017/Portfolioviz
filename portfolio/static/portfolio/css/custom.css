@@ -1,3 +1,4 @@
+/* RESEARCH HERO BANNER  ---------------------------------------------------------------------------- */ 
 .jumbotron{
     padding-top:0px;
     background-color:#79FEFF;
@@ -5,7 +6,7 @@
     border: 1px groove black;
   }
   
-.fontTitle{
+.companyTitle{
     font-family: 'Impact', sans-serif;
     font-size:44px;
 }
@@ -32,20 +33,14 @@
   color:#FF3E22;
 }
 
-.table th {
-  text-align: left;   
-}
-
-table{
-  font-size:14px;
-}
-
 #quoteDate{
   font-size:10px;
   text-align: right;   
   top: -1rem;
 }
 
+
+/* this still being used??? */ 
 .positionWrapper{
   background-color:#65EDFF;
   border-style: groove;
@@ -55,9 +50,10 @@ table{
 
 }
 
+/* TABLES ---------------------------------------------------------------------------- */ 
 .tableDates{
   font-weight:bold;
-  font-size:16px;
+  font-size:14px;
   
 }
 
@@ -67,11 +63,23 @@ table{
   font-family: 'Oswald', sans-serif;
 }
 
-.tableDesignHero{
-  font-family: 'Oswald', sans-serif;
+.dataTables_scroll{
+    overflow:auto;
 }
 
-.dataTables_scroll
-{
-    overflow:auto;
+tbody td.col-1{
+  text-align: right;
+}
+
+td.col-1, th.col-1{
+  min-width:150px;
+  max-width:150px;
+}
+
+tbody th {
+  text-align: left;   
+}
+
+table{
+  font-size:12px;
 }

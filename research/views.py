@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from portfolio.forms import SymbolForm, AddPositionForm
 from folio_viz.helpers.url_functions import get_fundamentals, get_realTime
+from folio_viz.helpers.functions import cleanFinancialStatement
 from portfolio.models import Portfolio
 from datetime import datetime
 import requests
 import pandas as pd
 import json
-
 
 
 
@@ -66,50 +66,13 @@ def research_home(request):
         fundamentals =  get_fundamentals(symbol, api_key)
         realTime =  get_realTime(symbol, api_key)
 
-        balanceSheetYearly = []
-        incomeStatementYearly = []
+        balanceSheetYearly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['yearly'])
+        balanceSheetQuarterly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['quarterly'])
+        incomeStatementYearly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['yearly'])
+        incomeStatementQuarterly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['quarterly'])
+        cashFlowYearly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['yearly'])
+        cashFlowQuarterly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['quarterly'])
         
-        
-        for value in fundamentals['Financials']['Income_Statement']['yearly'].items():
-            for k, v in value[1].items():
-                if v is None:
-                    value[1][k] = '-'
-            
-                try:
-                    v = float(v)
-                    value[1][k] = int(v / 1000000)
-                except:
-                    continue                
-            incomeStatementYearly.append(value)    
-
-
-
-
-
-
-
-
-        for value in fundamentals['Financials']['Balance_Sheet']['yearly'].items():
-            for k, v in value[1].items():
-                if v is None:
-                    value[1][k] = '-'
-            
-                try:
-                    v = float(v)
-                    value[1][k] = int(v / 1000000)
-                except:
-                    continue                
-            balanceSheetYearly.append(value)    
-            
-                      
-                
-
-        
-                
-                
-
-
-
 
 
         if fundamentals and realTime:  
@@ -118,28 +81,16 @@ def research_home(request):
             if realTime['change'] < 0:
                 realTime['changeDown'] = True
          
-
-            
-              
-
-
-            
-
-
-
-
-
-
-
-
-
-
             context = {
                 'fundamentals': fundamentals,
                 'addPositionForm': addPositionForm,
                 'realTime': realTime,
                 'balanceSheetYearly': balanceSheetYearly,
-                'incomeStatementYearly': incomeStatementYearly
+                'incomeStatementYearly': incomeStatementYearly,
+                'cashFlowYearly': cashFlowYearly,
+                'balanceSheetQuarterly': balanceSheetQuarterly,
+                'cashFlowQuarterly': cashFlowQuarterly,
+                'incomeStatementQuarterly': incomeStatementQuarterly
             }
             return render(request, 'research/research_home.html', context)   
         else:
