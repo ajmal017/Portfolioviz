@@ -3,8 +3,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-
-
 class Portfolio(models.Model):
     portfolio_name = models.CharField(max_length=150)
     date_added = models.DateTimeField(default=timezone.now)

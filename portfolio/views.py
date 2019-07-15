@@ -61,7 +61,7 @@ class PortfolioCreateView(LoginRequiredMixin, CreateView):
 
 class PortfolioUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Portfolio
-    fields = ['date_added', 'portfolio_name', 'portfolio_label']
+    fields = ['date_added', 'portfolio_name', 'portfolio_label', 'description']
 
     # setting author of the portfolio to logged in user
     def form_valid(self, form):

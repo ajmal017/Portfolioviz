@@ -13,9 +13,19 @@
                 <h1 class="display-5 companyTitle d-inline">{{ fundamentals.General.Name }}</h1>
                 <span class="d-inline">({{ fundamentals.General.Code }})</span>
             </div>
+            
             <div class="col-3">
-                <button type="button" data-toggle="modal" data-target="#addPortfolioModal" class="btn btn-primary btn-lg mt-3 float-right">Add to portfolio</button>
+                {% if user.is_authenticated %}
+                    <button type="button" data-toggle="modal" data-target="#addPortfolioModal" class="btn btn-primary btn-lg mt-3 float-right">Add to portfolio</button>
+                {% else %}
+                    <button type="button" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-lg mt-3 float-right">Add to portfolio</button>
+                {% endif %}
             </div>
+            
+
+                
+
+            
         </div>
         <!-- PRICE CHANGE -->
         <div class="row">
@@ -1795,6 +1805,14 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                {% if fundamentals.General.Type == 'INDEX' %}
+                </div>
+                <div class="modal-body">
+                    <div class="row pb-2 pl-4">
+                        Cannot add an INDEX to a portfolio. Please select a Stock or ETF.
+                    </div>
+                </div>
+                {% else %}
                 <div class="col-7">
                 <form method="POST">
                     {% csrf_token %}
@@ -1827,12 +1845,29 @@
                     <div class="col-4 pl-0">{{ addPositionForm.date }}</div>
                 </div>  
             </div>
-            
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <button class="btn btn-primary" type="submit" href="#">Add Position</a>
             </div>
             </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Login Modal ----------------------------------------------------------------------->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+                <div class="row pb-2">
+                    <div class="col">
+                        <h6 class="modal-title pl-4" id="exampleModalLabel">Please <a href="{% url 'login' %}?next=research?symbol={{fundamentals.General.Code}}">Login</a> or <a href="{% url 'register' %}">Sign Up </a> to add <strong>{{ fundamentals.General.Name }}</strong> to a portfolio.</h6>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

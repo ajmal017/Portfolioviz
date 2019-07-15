@@ -2,10 +2,6 @@ from django import forms
 from . models import Position, Portfolio
 from django.forms import TextInput,  ModelForm
 
-
-
-
-
 class AddPositionForm(ModelForm):
     class Meta:
         model = Position
