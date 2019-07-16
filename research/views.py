@@ -16,9 +16,7 @@ api_key = '5cf16f2040e332.31358607'
 # Name of variable in HTML template: variable passed
 def research_home(request):
         
-    if request.method == 'GET':
-        
-
+    if request.method == 'GET': 
         symbol = request.GET.get('symbol')
         if symbol:
             fundamentals =  get_fundamentals(symbol, api_key)
@@ -26,54 +24,45 @@ def research_home(request):
 
             if fundamentals and realTime:  
                 today = datetime.today().strftime('%Y-%m-%d')
-
-
+                bv = 100 * float(realTime['close']) + 4.99
                 data = {
                 'shares': 100,
                 'price': realTime['close'],
                 'date': today,
                 'commission': 4.99,
+                'book_value': bv,
                 }
-            
-                try:
-                    balanceSheetYearly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['yearly'])
-                    balanceSheetQuarterly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['quarterly'])
-                    incomeStatementYearly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['yearly'])
-                    incomeStatementQuarterly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['quarterly'])
-                    cashFlowYearly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['yearly'])
-                    cashFlowQuarterly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['quarterly'])
-                except:
-                    print('Error Retrieving Financial Data')
+                context = {
+                    'fundamentals': fundamentals
+                }
+
+                if 'Common Stock' in fundamentals['General']['Type']:
+                    try:
+                        balanceSheetYearly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['yearly'])
+                        balanceSheetQuarterly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['quarterly'])
+                        incomeStatementYearly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['yearly'])
+                        incomeStatementQuarterly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['quarterly'])
+                        cashFlowYearly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['yearly'])
+                        cashFlowQuarterly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['quarterly'])
+                    except:
+                        print('Error Retrieving Financial Data')
+                    context['balanceSheetYearly'] = balanceSheetYearly
+                    context['incomeStatementYearly'] = incomeStatementYearly
+                    context['cashFlowYearly'] = cashFlowYearly
+                    context['balanceSheetQuarterly'] = balanceSheetQuarterly
+                    context['cashFlowQuarterly'] = cashFlowQuarterly
+                    context['incomeStatementQuarterly'] = incomeStatementQuarterly
 
                 realTime['timestamp'] = datetime.fromtimestamp(realTime['timestamp'])
                 realTime['change_p'] = float("{0:.2f}".format(realTime['change_p'] * 100))
                 if realTime['change'] < 0:
                     realTime['changeDown'] = True
-            
+                context['realTime'] = realTime
+
                 if request.user.is_authenticated:
                     addPositionForm = AddPositionForm(**{'user': request.user}, initial=data)
-                    context = {
-                        'fundamentals': fundamentals,
-                        'addPositionForm': addPositionForm,
-                        'realTime': realTime,
-                        'balanceSheetYearly': balanceSheetYearly,
-                        'incomeStatementYearly': incomeStatementYearly,
-                        'cashFlowYearly': cashFlowYearly,
-                        'balanceSheetQuarterly': balanceSheetQuarterly,
-                        'incomeStatementQuarterly': incomeStatementQuarterly,
-                        'cashFlowQuarterly': cashFlowQuarterly
-                    }
-                else:
-                    context = {
-                        'fundamentals': fundamentals,
-                        'realTime': realTime,
-                        'balanceSheetYearly': balanceSheetYearly,
-                        'incomeStatementYearly': incomeStatementYearly,
-                        'cashFlowYearly': cashFlowYearly,
-                        'balanceSheetQuarterly': balanceSheetQuarterly,
-                        'incomeStatementQuarterly': incomeStatementQuarterly,
-                        'cashFlowQuarterly': cashFlowQuarterly
-                    }
+                    context['addPositionForm'] = addPositionForm
+                
                 return render(request, 'research/research_home.html', context)   
             else:
                 messages.error(request, "Symbol not recognized. Please search again. Type \".TO\" for CAD symbols.", extra_tags='danger')
@@ -95,9 +84,8 @@ def research_home(request):
         messages.error(request, "Symbol not recognized. Please search again. Type \".TO\" for CAD symbols.", extra_tags='danger')
         return render(request, 'research/research_home.html')
 
-
     if request.method == 'POST':
-        # print(request.POST)
+       
         updated_request = request.POST.copy()
         formSymbol = request.GET.get('symbol')
 
@@ -118,7 +106,6 @@ def research_home(request):
             formPrice = addPositionForm.cleaned_data.get('price')
             formSymbol = formSymbol.upper()
             
-            # username = addPositionForm.cleaned_data.get('username')
             messages.success(request, f'<strong>{formTransaction} {formShares}</strong> shares of\
                                         <strong>{formSymbol}</strong> at <strong>${formPrice}</strong> in portfolio <strong>{formPortfolio}.</strong>')
             return redirect('research_home') 

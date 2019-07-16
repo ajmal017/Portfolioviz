@@ -27,6 +27,7 @@ class Position(models.Model):
     transaction_type = models.CharField(choices=TRANSACTION_CHOICES, default="BUY", max_length=4)
     shares = models.IntegerField()
     price = models.DecimalField(decimal_places=2, max_digits=10)
+    book_value = models.DecimalField(decimal_places=2, max_digits=15, null=True)
     date = models.DateField(null=True)
     commission = models.DecimalField(decimal_places=2, max_digits=6,null=True)
     date_added = models.DateTimeField(default=timezone.now)

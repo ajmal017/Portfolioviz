@@ -131,3 +131,10 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     "django.core.context_processors.auth",
+#     "django.core.context_processors.debug",
+#     "django.core.context_processors.i18n",
+#     "django.core.context_processors.media",
+#     "django.core.context_processors.request",
+# )

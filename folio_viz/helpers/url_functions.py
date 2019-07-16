@@ -8,3 +8,10 @@ def get_fundamentals(symbol, api_key):
 def get_realTime(symbol, api_key):
     url = 'https://eodhistoricaldata.com/api/real-time/{}?fmt=json&api_token={}'.format(symbol, api_key)
     return requests.get(url).json()
+
+def get_eodQuote(symbols, api_key):
+    url = 'https://eodhistoricaldata.com/api/eod-bulk-last-day/US?api_token={}&fmt=json&symbols='.format(api_key)
+    for symbol in symbols:
+        url += str(symbol) + ','
+    url = url[:-1]
+    return requests.get(url).json()

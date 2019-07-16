@@ -24,38 +24,102 @@
     </div>
   </div>
 
-  {% for position in object.position_set.all %}
+  <!-- CARDS ---------------------------------------------------------------------------------->
+<div class="card text-center">
+  <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+          <a class="nav-link" href="#overview" id="navOverviewCard">Overview</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link active" href="#positions" id="navPositionssCard">View Positions</a>
+      </li>
+      </ul>
+  </div>
 
-  <div class="row positionWrapper">
-      <div class="col-2">
-        <h1 class="fontTitle">{{ position }}</h1>
-      </div>
-      <div class="col-2">
-        {% if position.transaction_type == 'BUY' %}
-          Quantity: {{position.shares}}
-        {% else %}
-          Quantity: -{{position.shares}}
-        {% endif %}
-      </div>
-      <div class="col-2">
-        Price: {{position.price}}
-      </div>
-      <div class="col-2">
-        Commission: {{position.commission}}
-      </div>
-      <div class="col-2">
-        Book value: $BOOKVALUE
-      </div>
-      <div class="col-2">
-          <i class="far fa-edit"></i>
-      </div>
-  </div> <!-- row -->
-  <br>
-
+  <!-- CARD BODY ---------------------------------------------------------------------------------->
+  <div class="card-body">
+    <!-- OVERVIEW CARD ---------------------------------------------------------------------------------->
+    <div id="OverviewCard" style="display: none;">
+        <p style="text-align: left;"> OVERVIEW</p>    
+    </div>  
     
+    <!-- POSITIONS CARD ---------------------------------------------------------------------------------->
+    <div id="positionsCard">
+
+      
+      {% for position in object.position_set.all %}
+      
+      
+      <div class="row positionWrapper">
+          <div class="col-2">
+            <h1 class="fontTitle">{{ position }}</h1>
+          </div>
+          <div class="col">
+            {% if position.transaction_type == 'BUY' %}
+              Quantity: {{position.shares}}
+            {% else %}
+              Quantity: -{{position.shares}}
+            {% endif %}
+          </div>
+          <div class="col">
+            AVG cost: {{position.price}}
+            {% for symbol in symbolQuotes %}
+              {% if forloop.counter == forloop.parentloop.counter %}
+              Price: {{symbol.close}}
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="col">
+            Commission: {{position.commission}}
+          </div>
+          <div class="col">
+            Book value: {{position.book_value}}
+          </div>
+          <div class="col">
+            Market value: $MKT VALUE
+          </div>
+          <div class="col">
+              <i class="far fa-edit"></i>
+          </div>
+      </div> <!-- row -->
+      <br>
+      
+
+      <!-- {% with outerCount=forloop.counter %}
+      {{ symbolQuotes.outerCount }}
+      
+          
+      {% endwith %} -->
+
+      {% endfor %}
+      
+      
+
+      <hr>
+      
+
+      <hr><hr>
+     
 
 
-  {% endfor %}
+
+   
+    </div> <!-- financials card -->
+
+  </div> <!-- card body -->
+
+</div><!-- card -->
+
+<br>
+
+
+
+
+
+  
+
+  
 
 
 

@@ -1825,6 +1825,10 @@
 
             <div class="modal-body">
                 <div class="row pb-2">
+                    <div class="col-6 text-right pr-5 posFormFields">Date:</div>
+                    <div class="col-4 pl-0">{{ addPositionForm.date }}</div>
+                </div>
+                <div class="row pb-2">
                     <div class="col-6 text-right pr-5 posFormFields">Transaction:</div>
                     <div class="col-4 pl-0">{{ addPositionForm.transaction_type }}</div>
                 </div>
@@ -1841,9 +1845,10 @@
                     <div class="col-4 pl-0">{{ addPositionForm.commission }}</div>
                 </div>
                 <div class="row pb-2">
-                    <div class="col-6 text-right pr-5 posFormFields">Date:</div>
-                    <div class="col-4 pl-0">{{ addPositionForm.date }}</div>
-                </div>  
+                    <div class="col-6 text-right pr-5 posFormFields">Book Value:</div>
+                    <div class="col-4 pl-0">{{ addPositionForm.book_value }}</div>
+                </div>
+                  
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -1864,7 +1869,7 @@
             <div class="modal-body">
                 <div class="row pb-2">
                     <div class="col">
-                        <h6 class="modal-title pl-4" id="exampleModalLabel">Please <a href="{% url 'login' %}?next=research?symbol={{fundamentals.General.Code}}">Login</a> or <a href="{% url 'register' %}">Sign Up </a> to add <strong>{{ fundamentals.General.Name }}</strong> to a portfolio.</h6>
+                        <h6 class="modal-title pl-4" id="exampleModalLabel">Please <a href="{% url 'login' %}?next={{request.path}}?symbol={{fundamentals.General.Code}}"> Login </a> or <a href="{% url 'register' %}?next={{request.path}}?symbol={{fundamentals.General.Code}}">Sign up </a> to add <strong>{{ fundamentals.General.Name }}</strong> to a portfolio.</h6>                    
                     </div>
                 </div>
             </div>

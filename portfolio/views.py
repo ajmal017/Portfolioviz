@@ -1,7 +1,8 @@
 import requests
 import pandas as pd
 import json
-from .models import Portfolio
+from folio_viz.helpers.url_functions import get_eodQuote
+from .models import Portfolio, Position
 from pandas.io.json import json_normalize
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -14,17 +15,10 @@ from django.views.generic import (
     DeleteView
 )
 
-# https://eodhistoricaldata.com/api/fundamentals/AAPL.US?fmt=csv&api_token=5cf16f2040e332.31358607
 api_key = '5cf16f2040e332.31358607'
-url = 'https://eodhistoricaldata.com/api/fundamentals/AAPL.US?fmt=csv&api_token={}'.format(api_key)
 
 # Name of variable in HTML template: variable passed
-# def home(request):
-#     context = {
-#         'portfolios': Portfolio.objects.all()
-#     }
-    
-#     return render(request, 'portfolio/home.html', context)
+
 
 class PortfolioListView(ListView):
     model = Portfolio
@@ -48,7 +42,20 @@ class UserPortfolioListView(ListView):
         return Portfolio.objects.filter(user=user).order_by('-date_added')
 
 class PortfolioDetailView(DetailView):
+    
     model = Portfolio
+
+   
+   
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        symbols = self.get_object().position_set.all()
+        
+        context['symbolQuotes'] = get_eodQuote(symbols, api_key)
+
+        return context
+    
+
     
 class PortfolioCreateView(LoginRequiredMixin, CreateView):
     model = Portfolio
@@ -89,11 +96,5 @@ def about(request):
 
 # Name of variable in HTML template: variable passed
 def dashboard(request):
-    r = requests.get(url)
-    response = r.json()
-    context = {
-        'response': response
-    }
-    
-    print(type(response))
-    return render(request, 'portfolio/dashboard.html', context)
+
+    return render(request, 'portfolio/dashboard.html')

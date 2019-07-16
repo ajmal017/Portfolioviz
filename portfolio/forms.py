@@ -5,7 +5,7 @@ from django.forms import TextInput,  ModelForm
 class AddPositionForm(ModelForm):
     class Meta:
         model = Position
-        fields = ['portfolio', 'symbol', 'transaction_type', 'shares', 'price', 'date', 'commission', 'date']
+        fields = ['portfolio', 'symbol', 'transaction_type', 'shares', 'price', 'date', 'commission', 'date', 'book_value']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
