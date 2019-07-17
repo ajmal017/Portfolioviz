@@ -41,26 +41,20 @@ def research_home(request):
 
                 if 'Common Stock' in fundamentals['General']['Type']:
                     try:
-                        balanceSheetYearly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['yearly'])
-                        balanceSheetQuarterly = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['quarterly'])
-                        incomeStatementYearly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['yearly'])
-                        incomeStatementQuarterly = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['quarterly'])
-                        cashFlowYearly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['yearly'])
-                        cashFlowQuarterly = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['quarterly'])
+                        context['balanceSheetYearly'] = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['yearly'])
+                        context['balanceSheetQuarterly'] = cleanFinancialStatement(fundamentals['Financials']['Balance_Sheet']['quarterly'])
+                        context['incomeStatementYearly'] = cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['yearly'])
+                        context['incomeStatementQuarterly']= cleanFinancialStatement(fundamentals['Financials']['Income_Statement']['quarterly'])
+                        context['cashFlowYearly'] = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['yearly'])
+                        context['cashFlowQuarterly'] = cleanFinancialStatement(fundamentals['Financials']['Cash_Flow']['quarterly'])
+                        realTime['timestamp'] = datetime.fromtimestamp(realTime['timestamp'])
+                        realTime['change_p'] = float("{0:.2f}".format(realTime['change_p'] * 100))
+                        if realTime['change'] < 0:
+                            realTime['changeDown'] = True
+                        context['realTime'] = realTime
                     except:
                         print('Error Retrieving Financial Data')
-                    context['balanceSheetYearly'] = balanceSheetYearly
-                    context['incomeStatementYearly'] = incomeStatementYearly
-                    context['cashFlowYearly'] = cashFlowYearly
-                    context['balanceSheetQuarterly'] = balanceSheetQuarterly
-                    context['cashFlowQuarterly'] = cashFlowQuarterly
-                    context['incomeStatementQuarterly'] = incomeStatementQuarterly
 
-                realTime['timestamp'] = datetime.fromtimestamp(realTime['timestamp'])
-                realTime['change_p'] = float("{0:.2f}".format(realTime['change_p'] * 100))
-                if realTime['change'] < 0:
-                    realTime['changeDown'] = True
-                context['realTime'] = realTime
 
                 if request.user.is_authenticated:
                     addPositionForm = AddPositionForm(**{'user': request.user}, initial=data)
@@ -88,18 +82,20 @@ def research_home(request):
         return render(request, 'research/research_home.html')
 
     if request.method == 'POST':
-       
         updated_request = request.POST.copy()
         formSymbol = request.GET.get('symbol')
-
         formShares = request.POST.get('shares')
-        formPrice = request.POST.get('price')
         formTransaction = request.POST.get('transaction_type')
+        formPrice = request.POST.get('price')
+        formPrice = str(round(float(formPrice), 2))
+        
+        
+        updated_request.update({'symbol': formSymbol, 'price': formPrice})
 
-        updated_request.update({'symbol': formSymbol})
         addPositionForm = AddPositionForm(updated_request)
+        print('form errors')
+        print(addPositionForm.errors)
         if addPositionForm.is_valid():
-            print('here')
             addPositionForm.save()
             if 'BUY' in addPositionForm.cleaned_data.get('transaction_type'):
                 formTransaction = 'BOUGHT'

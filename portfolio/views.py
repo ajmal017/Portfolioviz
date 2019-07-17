@@ -48,22 +48,22 @@ class PortfolioDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         positions = self.get_object().position_set.all()
-        realTimeQuotes = get_bulkRealTime(positions, api_key)
-       
-        temp = list(zip(realTimeQuotes, positions))
-        marketValues = []
-        changes = []
-        percentageChanges = []
-        for x in temp:
-            marketValue = float("{0:.2f}".format(x[1].shares * x[0]['close']))
-            marketValues.append(marketValue)
-            change = float("{0:.2f}".format(marketValue - float(x[1].book_value)))
-            changes.append(change)
-            changePercentage = float("{0:.3f}".format( change / float(x[1].book_value )))
-            percentageChanges.append(changePercentage)
-        
-        context['rtQuotes'] = list(zip(realTimeQuotes, positions, marketValues, changes, percentageChanges  ))
-        print(context['rtQuotes'])
+        try:
+            realTimeQuotes = get_bulkRealTime(positions, api_key)
+            temp = list(zip(realTimeQuotes, positions))
+            marketValues = []
+            changes = []
+            percentageChanges = []
+            for x in temp:
+                marketValue = float("{0:.2f}".format(x[1].shares * x[0]['close']))
+                marketValues.append(marketValue)
+                change = float("{0:.2f}".format(marketValue - float(x[1].book_value)))
+                changes.append(change)
+                changePercentage = float("{0:.3f}".format( change / float(x[1].book_value )))
+                percentageChanges.append(changePercentage)
+            context['rtQuotes'] = list(zip(realTimeQuotes, positions, marketValues, changes, percentageChanges  ))
+        except:
+            print('no positions in portfolio')
         return context
        
                 
