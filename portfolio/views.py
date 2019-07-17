@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 import json
-from folio_viz.helpers.url_functions import get_eodQuote
+from folio_viz.helpers.url_functions import get_eodQuote, get_realTime, get_bulkRealTime
 from .models import Portfolio, Position
 from pandas.io.json import json_normalize
 from django.shortcuts import render, get_object_or_404
@@ -35,25 +35,43 @@ class UserPortfolioListView(ListView):
     template_name = 'portfolio/user_portfolios.html' 
     # variable name that's looped over in the template
     context_object_name = 'portfolios'
-    paginate_by = 3
+    paginate_by = 5
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Portfolio.objects.filter(user=user).order_by('-date_added')
 
-class PortfolioDetailView(DetailView):
+class PortfolioDetailView(DetailView):   
+    model = Portfolio 
     
-    model = Portfolio
-
-   
-   
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        symbols = self.get_object().position_set.all()
+        positions = self.get_object().position_set.all()
+        realTimeQuotes = get_bulkRealTime(positions, api_key)
+       
+        temp = list(zip(realTimeQuotes, positions))
+        marketValues = []
+        changes = []
+        percentageChanges = []
+        for x in temp:
+            marketValue = float("{0:.2f}".format(x[1].shares * x[0]['close']))
+            marketValues.append(marketValue)
+            change = float("{0:.2f}".format(marketValue - float(x[1].book_value)))
+            changes.append(change)
+            changePercentage = float("{0:.3f}".format( change / float(x[1].book_value )))
+            percentageChanges.append(changePercentage)
         
-        context['symbolQuotes'] = get_eodQuote(symbols, api_key)
-
+        context['rtQuotes'] = list(zip(realTimeQuotes, positions, marketValues, changes, percentageChanges  ))
+        print(context['rtQuotes'])
         return context
+       
+                
+
+
+
+
+    
     
 
     

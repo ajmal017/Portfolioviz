@@ -24,7 +24,10 @@ def research_home(request):
 
             if fundamentals and realTime:  
                 today = datetime.today().strftime('%Y-%m-%d')
-                bv = 100 * float(realTime['close']) + 4.99
+                try:
+                    bv =  float("{0:.2f}".format(100 * float(realTime['close']) + 4.99))
+                except:
+                    bv = '-'
                 data = {
                 'shares': 100,
                 'price': realTime['close'],
@@ -96,6 +99,7 @@ def research_home(request):
         updated_request.update({'symbol': formSymbol})
         addPositionForm = AddPositionForm(updated_request)
         if addPositionForm.is_valid():
+            print('here')
             addPositionForm.save()
             if 'BUY' in addPositionForm.cleaned_data.get('transaction_type'):
                 formTransaction = 'BOUGHT'

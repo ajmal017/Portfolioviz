@@ -53,7 +53,7 @@
       
       <div class="row positionWrapper">
           <div class="col-2">
-            <h1 class="fontTitle">{{ position }}</h1>
+            <h3>{{ position|upper }}</h3>
           </div>
           <div class="col">
             {% if position.transaction_type == 'BUY' %}
@@ -64,9 +64,11 @@
           </div>
           <div class="col">
             AVG cost: {{position.price}}
-            {% for symbol in symbolQuotes %}
+          </div>
+          <div class="col">
+            {% for symbol in rtQuotes %}
               {% if forloop.counter == forloop.parentloop.counter %}
-              Price: {{symbol.close}}
+                Price: {{symbol.0.close}}
               {% endif %}
             {% endfor %}
           </div>
@@ -77,34 +79,34 @@
             Book value: {{position.book_value}}
           </div>
           <div class="col">
-            Market value: $MKT VALUE
+            {% for symbol in rtQuotes %}
+              {% if forloop.counter == forloop.parentloop.counter %}
+                Market Value: {{symbol.2}}
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="col">
+            {% for symbol in rtQuotes %}
+              {% if forloop.counter == forloop.parentloop.counter %}
+                Change: {{symbol.3}}
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="col">
+            {% for symbol in rtQuotes %}
+              {% if forloop.counter == forloop.parentloop.counter %}
+                Change %: {{symbol.4}}%
+              {% endif %}
+            {% endfor %}
           </div>
           <div class="col">
               <i class="far fa-edit"></i>
           </div>
       </div> <!-- row -->
       <br>
-      
-
-      <!-- {% with outerCount=forloop.counter %}
-      {{ symbolQuotes.outerCount }}
-      
-          
-      {% endwith %} -->
-
       {% endfor %}
-      
-      
+  
 
-      <hr>
-      
-
-      <hr><hr>
-     
-
-
-
-   
     </div> <!-- financials card -->
 
   </div> <!-- card body -->

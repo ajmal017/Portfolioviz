@@ -15,3 +15,13 @@ def get_eodQuote(symbols, api_key):
         url += str(symbol) + ','
     url = url[:-1]
     return requests.get(url).json()
+
+def get_bulkRealTime(symbols, api_key):
+    url = 'https://eodhistoricaldata.com/api/real-time/{}?api_token={}&fmt=json&s='.format(str(symbols[0]), api_key)
+    print(url)
+    for symbol in symbols[1:]:
+        url += str(symbol) + ','
+    url = url[:-1]
+    return requests.get(url).json()
+
+    
