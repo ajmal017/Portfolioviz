@@ -48,8 +48,27 @@ class PortfolioDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         positions = self.get_object().position_set.all()
-        try:
+
+        # validate if portfolio only has one or less position
+        if self.get_object().position_set.count() < 1:
+            return context
+        elif self.get_object().position_set.count() == 1:   
+            realTimeQuotes = get_realTime(positions[0], api_key)
+            marketValue = float("{0:.2f}".format(positions[0].shares * realTimeQuotes['close']))
+            change = float("{0:.2f}".format(marketValue - float(positions[0].book_value)))
+            changePercentage = float("{0:.3f}".format( change / float(positions[0].book_value )))
+            context['rtQuotes'] = [realTimeQuotes, positions, marketValue, change, changePercentage]
+            for x in context['rtQuotes']:
+                print(x)
+            
+            # print (context['rtQuotes'][0]['close'])
+            return context
+            
+
+        else:
             realTimeQuotes = get_bulkRealTime(positions, api_key)
+
+        try:
             temp = list(zip(realTimeQuotes, positions))
             marketValues = []
             changes = []
@@ -62,8 +81,9 @@ class PortfolioDetailView(DetailView):
                 changePercentage = float("{0:.3f}".format( change / float(x[1].book_value )))
                 percentageChanges.append(changePercentage)
             context['rtQuotes'] = list(zip(realTimeQuotes, positions, marketValues, changes, percentageChanges  ))
-        except:
-            print('no positions in portfolio')
+        except Exception as e:
+            print('Exception Error:')
+            print(e)
         return context
        
                 

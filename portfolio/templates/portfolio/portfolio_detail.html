@@ -65,7 +65,11 @@
           <div class="col">
             {% for symbol in rtQuotes %}
               {% if forloop.counter == forloop.parentloop.counter %}
-                Price: {{symbol.0.close}}
+                {% if object.position_set.count == 1 %}
+                  Price: {{symbol.close}}
+                {% else %}
+                  Price: {{symbol.0.close}}
+                {% endif %}
               {% endif %}
             {% endfor %}
           </div>
@@ -78,21 +82,33 @@
           <div class="col">
             {% for symbol in rtQuotes %}
               {% if forloop.counter == forloop.parentloop.counter %}
-                Market Value: {{symbol.2}}
+                {% if object.position_set.count == 1 %}
+                  Market Value: {{rtQuotes.2}}
+                {% else %}
+                  Market Value: {{symbol.2}}
+                {% endif %}
               {% endif %}
             {% endfor %}
           </div>
           <div class="col">
             {% for symbol in rtQuotes %}
               {% if forloop.counter == forloop.parentloop.counter %}
-                Change: {{symbol.3}}
+                {% if object.position_set.count == 1 %}
+                    Change: {{rtQuotes.3}}
+                {% else %}
+                  Change: {{symbol.3}}
+                {% endif %}
               {% endif %}
             {% endfor %}
           </div>
           <div class="col">
             {% for symbol in rtQuotes %}
               {% if forloop.counter == forloop.parentloop.counter %}
-                Change %: {{symbol.4}}%
+                {% if object.position_set.count == 1 %}
+                  Change: {{rtQuotes.3}}
+                {% else %}
+                  Change %: {{symbol.4}}%
+                {% endif %}
               {% endif %}
             {% endfor %}
           </div>

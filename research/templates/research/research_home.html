@@ -2,9 +2,6 @@
 
 {% block content %}
 
-{% if messages %}
-    
-{% else %}
 
 <div class="jumbotron jumbotron-fluid pb-0">
     <div class="container">
@@ -20,13 +17,9 @@
                 {% else %}
                     <button type="button" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-lg mt-3 float-right">Add to portfolio</button>
                 {% endif %}
-            </div>
-            
-
-                
-
-            
+            </div>    
         </div>
+
         <!-- PRICE CHANGE -->
         <div class="row">
             <div class="col-12">
@@ -1860,6 +1853,11 @@
     </div>
 </div>
 
+        
+
+
+
+
 <!-- Login Modal ----------------------------------------------------------------------->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -1878,5 +1876,5 @@
 </div>
 
 
-{% endif %}    
+ 
 {% endblock content %}
