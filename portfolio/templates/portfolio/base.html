@@ -33,17 +33,11 @@
 </head>
 
 <body id="page-top">
-
+  <!-- Navbar ----------------------------------------------------->
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="{%url 'portfolio-home' %}">FOLIO-VIZ</a>
-
-    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-      <i class="fas fa-bars"></i>
-    </button>
-
     <!-- Search FORM --------------------------------------------->
-    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" method="GET" action="{%url 'research_home' %}">
+    <form method="GET" action="{%url 'research_home' %}">
       <div class="input-group">
 
           <!-- RADIO BUTTON US
@@ -67,7 +61,17 @@
       </div>
     </form>
 
-    <!-- Navbar -->
+    
+
+    <a class="navbar-brand d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0"
+      href="{%url 'portfolio-home' %}">INVESTOR ANALYTICS</a>
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0 ml-auto" data-toggle="modal" data-target="#menuModal"
+        href="#">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+    
+    
     <ul class="navbar-nav ml-auto ml-md-0">
       {% if user.is_authenticated %}
         <li class="nav-item dropdown no-arrow">
@@ -87,49 +91,14 @@
         <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
       {% endif %}
     </ul>
+
+
+    
+   
   </nav>
 
+  <!-- WRAPPER  --------------------------------------------->
   <div id="wrapper">
-
-    <!-- Sidebar -->
-    <ul class="sidebar navbar-nav toggled">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'research_home' %}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Research</span>
-        </a>
-      </li>
-      <li class="nav-item dropdown">
-        {% if user.is_authenticated %}
-          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Portfolios</span>
-          </a>
-        {% endif %}
-        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-          <h6 class="dropdown-header">Portfolio Screens:</h6>
-          <a class="dropdown-item" href="{%url 'user-portfolios' user %}">View Portfolios</a>
-          <a class="dropdown-item" href="{%url 'portfolio-create' %}">Create Portfolio</a>
-          <!-- <a class="dropdown-item" href="#">Register</a>
-          <a class="dropdown-item" href="#">Forgot Password</a>
-          <div class="dropdown-divider"></div>
-          <h6 class="dropdown-header">Other Pages:</h6>
-          <a class="dropdown-item" href="#">404 Page</a>
-          <a class="dropdown-item" href="#">Blank Page</a> -->
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{%url 'charts' %}">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Analytics</span></a>
-      </li>
-    </ul>
-
     <div id="content-wrapper">
 
       <div class="container-fluid">
@@ -182,6 +151,65 @@
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
           <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- Menu Modal-->
+   <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Menu</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <ul>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'research_home' %}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Research</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              {% if user.is_authenticated %}
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-fw fa-folder"></i>
+                  <span>Portfolios</span>
+                </a>
+              {% endif %}
+              <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                <h6 class="dropdown-header">Portfolio Screens:</h6>
+                <a class="dropdown-item" href="{%url 'user-portfolios' user %}">View Portfolios</a>
+                <a class="dropdown-item" href="{%url 'portfolio-create' %}">Create Portfolio</a>
+                <!-- <a class="dropdown-item" href="#">Register</a>
+                <a class="dropdown-item" href="#">Forgot Password</a>
+                <div class="dropdown-divider"></div>
+                <h6 class="dropdown-header">Other Pages:</h6>
+                <a class="dropdown-item" href="#">404 Page</a>
+                <a class="dropdown-item" href="#">Blank Page</a> -->
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'charts' %}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Charts</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Analytics</span></a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
         </div>
       </div>
     </div>

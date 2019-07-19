@@ -33,6 +33,7 @@ api_key = '5cf16f2040e332.31358607'
 # Name of variable in HTML template: variable passed
 def research_home(request):
     
+    
     # GET METHOD -----------------------------------------------------------------------------
     if request.method == 'GET': 
         symbol = request.GET.get('symbol')
@@ -134,13 +135,15 @@ def research_home(request):
 
             addPositionForm.save()
             if 'BUY' in addPositionForm.cleaned_data.get('transaction_type'):
-                formTransaction = 'BOUGHT'
+                formTransaction = 'ADDED'
             else:
                 formTransaction = 'SOLD'
 
             formSymbol = formSymbol.upper()
-            messages.success(request, f'<strong>{formTransaction} {formShares}</strong> shares of\
-                                        <strong>{formSymbol}</strong> at <strong>${formPrice}</strong> in portfolio <strong><a href="{portfolioUrl}">{formPortfolio}.</a></strong>')
+            
+            messages.success(request, f'{formShares} <strong>{formSymbol}</strong> \
+                                        at <strong>${formPrice} {formTransaction}</strong> in portfolio <strong><a href="{portfolioUrl}">\
+                                        {formPortfolio}.</a></strong>')
             return HttpResponseRedirect(request.path_info + f'?symbol={formSymbol}')
            
 

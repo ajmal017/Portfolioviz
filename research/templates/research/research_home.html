@@ -11,11 +11,12 @@
                 <span class="d-inline">({{ fundamentals.General.Code }})</span>
             </div>
             
+
             <div class="col-3">
                 {% if user.is_authenticated %}
-                    <button type="button" data-toggle="modal" data-target="#addPortfolioModal" class="btn btn-primary btn-lg mt-3 float-right">Add to portfolio</button>
+                    <button type="button" data-toggle="modal" data-target="#addPortfolioModal" class="btn btn-primary btn-lg mt-3 float-right">Add {{fundamentals.General.Code}} to portfolio</button>
                 {% else %}
-                    <button type="button" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-lg mt-3 float-right">Add to portfolio</button>
+                    <button type="button" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-lg mt-3 float-right">Add {{fundamentals.General.Code}} to portfolio</button>
                 {% endif %}
             </div>    
         </div>
@@ -138,13 +139,15 @@
    
 <!-- CARDS ---------------------------------------------------------------------------------->
 <div class="card text-center">
+
+    <!-- CARD HEADER ---------------------------------------------------------------------------------->
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#description" id="navDescriptionCard">Description</a>
+            <a class="nav-link active" href="#description" id="navDescriptionCard">Description</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="#financials" id="navFinancialsCard">Financials</a>
+            <a class="nav-link" href="#financials" id="navFinancialsCard">Financials</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Ratios</a>
@@ -158,19 +161,19 @@
     <!-- CARD BODY ---------------------------------------------------------------------------------->
     <div class="card-body">
         <!-- DESCRIPTION CARD ---------------------------------------------------------------------------------->
-        <div id="descriptionCard" style="display: none;">
+        <div id="descriptionCard" >
             <p style="text-align: left;"> {{ fundamentals.General.Description }}</p>    
         </div>  
         
         <!-- FINANCIALS CARD ---------------------------------------------------------------------------------->
-        <div id="financialsCard">
+        <div id="financialsCard" style="display: none;">
             <!-- FINANCIALS CARD BUTTONS ---------------------------------------------------------------------------------->
             <div class="row">
                 <div class="col-3 text-right">
-                    <button type="button" class="btn btn-info btn-lg" id="btnBalanceSheet">Balance Sheet</button>
+                    <button type="button" class="btn btn-outline-info btn-lg" id="btnBalanceSheet">Balance Sheet</button>
                 </div>
                 <div class="col-3 text-right">
-                    <button type="button" class="btn btn-outline-info btn-lg" id="btnIncomeStatement">Income Statement</button>
+                    <button type="button" class="btn btn-info btn-lg" id="btnIncomeStatement">Income Statement</button>
                 </div>
                 <div class="col-3 text-right">
                     <button type="button" class="btn btn-outline-info btn-lg" id="btnCashFlowStatement">Cash Flow Statement</button>
@@ -192,7 +195,7 @@
 
             <!-- YEARLY -------------------------------------------------------------------->   
             <!-- BALANCE SHEET YEARLY ------------------------------------------------------>   
-            <div id="balanceSheetYearlyWrapper">
+            <div id="balanceSheetYearlyWrapper" style="display: none;">
                 <div class="row">
                     <div class="col-12">
                         <table class="table table-hover table-striped table-sm tableDesign table-bordered" width="100%" id="balanceSheetYearlyTable">
@@ -1792,7 +1795,7 @@
 
 </div><!-- card -->
 <br>
-
+<!-- MODALS ----------------------------------------------------------------------->
 <!-- Add To Portfolio Modal ----------------------------------------------------------------------->
 <div class="modal fade" id="addPortfolioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

@@ -1,5 +1,6 @@
 $(document).ready(function() { 
     var period = $('#financialsPeriod').children("option:selected").val(); 
+    
 
     // Financials DataTables ----------------------------------------------------------------------------
         // Financials YEARLY ----------------------------------------------------------------------------
@@ -36,6 +37,10 @@ $(document).ready(function() {
         // Financials Card ----------------------------------------------------------------
         $('#navFinancialsCard').click(function(){
             $('#financialsCard').show()
+            $('#incomeStatementYearlyWrapper').show()
+            $('#incomeStatementYearlyTable').DataTable().columns.adjust();
+
+
             $('#descriptionCard').hide()
             $('a#navFinancialsCard').toggleClass("active")
             $('a#navDescriptionCard').toggleClass("active")
@@ -46,8 +51,8 @@ $(document).ready(function() {
                 
                 $( '#btnBalanceSheet' ).removeClass( "btn-outline-info" )
                 $( '#btnBalanceSheet' ).addClass( "btn-info" );
-                $( '#btnIncomeStatement, #btnCashFlowStatement' ).removeClass( "btn-info" )
-                $( '#btnIncomeStatement, #btnCashFlowStatement' ).addClass( "btn-outline-info" ); 
+                $( '#btnIncomeStatement, #btnCashFlowStatement' ).removeClass("btn-info")
+                $( '#btnIncomeStatement, #btnCashFlowStatement' ).addClass("btn-outline-info"); 
 
                 if(period == "yearly"){  
                     $('#balanceSheetYearlyWrapper').show()
